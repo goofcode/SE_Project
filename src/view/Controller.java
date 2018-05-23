@@ -5,23 +5,21 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
-import model.Module;
 
-import java.io.*;
-import java.nio.Buffer;
-import java.util.ArrayList;
-import java.util.SplittableRandom;
+import java.io.File;
+
 
 public class Controller {
+
     private Alert alert;
-    private Module module;
     static private  int left = 0;
     static private  int right = 1;
+
     @FXML
-    protected void l_load_file(ActionEvent event){
+    protected void l_load_file(ActionEvent event) {
         File file = fileChooser(event);
 
-        if(file != null){
+        if (file != null) {
 
         }
     }
@@ -33,6 +31,32 @@ public class Controller {
         if(file != null){
 
         }
+    }
+
+    @FXML
+    protected void l_edit_file(ActionEvent event){
+        System.out.println("left_edit_file click!");
+    }
+
+    @FXML
+    protected void l_save_file(ActionEvent event){
+        System.out.println("left_save_file click!");
+    }
+
+
+
+    @FXML
+    protected void r_edit_file(ActionEvent event){
+        System.out.println("right_edit_file click!");
+    }
+    @FXML
+    protected void r_save_file(ActionEvent event){
+        System.out.println("right_save_file click!");
+    }
+
+    @FXML
+    protected void compare_file(ActionEvent event){
+        System.out.println("compare_file click!");
     }
 
     public File fileChooser(ActionEvent event){

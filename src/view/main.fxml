@@ -22,9 +22,9 @@
                <top>
                   <FlowPane hgap="8.0" prefHeight="16.0" prefWidth="350.0">
                      <children>
-                      <Button minWidth="70.0" mnemonicParsing="false" onAction="#l_load_file" text="Load" />
-                        <Button minWidth="70.0" mnemonicParsing="false" text="Edit" />
-                        <Button minWidth="70.0" mnemonicParsing="false" text="Save" />
+                        <Button minWidth="70.0" mnemonicParsing="false" onAction="#l_load_file" text="Load" />
+                        <Button minWidth="70.0" mnemonicParsing="false" onAction="#l_edit_file" text="Edit" />
+                        <Button minWidth="70.0" mnemonicParsing="false" onAction="#l_save_file" text="Save" />
                      </children>
                      <BorderPane.margin>
                         <Insets bottom="7.0" left="10.0" top="7.0" />
@@ -40,8 +40,8 @@
                   <FlowPane hgap="8.0" prefHeight="16.0" prefWidth="350.0" BorderPane.alignment="CENTER">
                      <children>
                         <Button minWidth="70.0" mnemonicParsing="false" onAction="#r_load_file" text="Load" />
-                        <Button minWidth="70.0" mnemonicParsing="false" text="Edit" />
-                        <Button minWidth="70.0" mnemonicParsing="false" text="Save" />
+                        <Button minWidth="70.0" mnemonicParsing="false" onAction="#r_edit_file" text="Edit" />
+                        <Button minWidth="70.0" mnemonicParsing="false" onAction="#r_save_file" text="Save" />
                      </children>
                      <BorderPane.margin>
                         <Insets bottom="7.0" left="10.0" top="7.0" />
@@ -53,7 +53,7 @@
       </GridPane>
    </center>
    <top>
-      <Button mnemonicParsing="false" text="Compare" BorderPane.alignment="TOP_LEFT">
+      <Button mnemonicParsing="false" text="Compare" BorderPane.alignment="TOP_LEFT" onAction="#compare_file">
          <BorderPane.margin>
             <Insets bottom="7.0" left="10.0" top="7.0" />
          </BorderPane.margin>
