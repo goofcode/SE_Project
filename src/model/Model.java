@@ -14,10 +14,10 @@ public class Model {
     public void loadFile(File file, int side) {
         files[side] = file;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(file);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = null;
             while ((line = reader.readLine()) != null) {
-                switch (side){
+                switch (side) {
                     case 0:
                         leftText.add(line);
                         break;
@@ -26,6 +26,7 @@ public class Model {
                         break;
                 }
             }
+            reader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -33,8 +34,31 @@ public class Model {
         }
     }
 
-    public void saveFile(){
+    public void saveFile(File file, int side) throws IOException {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file.getPath() + ".txt"));
 
+            switch (side) {
+                case 0: {
+                    for (String str : leftText) {
+                        writer.write(str);
+                        writer.newLine();
+                    }
+                    break;
+                }
+                case 1: {
+                    for (String str : rightText) {
+                        writer.write(str);
+                        writer.newLine();
+                    }
+                    break;
+                }
+            }
+            writer.flush();
+            writer.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public File getFile(int side){
