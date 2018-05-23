@@ -32,11 +32,6 @@ public class Controller {
     private Alert alert;
 
     public Controller(){
-        l_save_btn.setDisable(true);
-        l_edit_btn.setDisable(true);
-        r_edit_btn.setDisable(true);
-        r_save_btn.setDisable(true);
-        comp_btn.setDisable(true);
         loadFlag[0] = loadFlag[1] = false;
     }
 
