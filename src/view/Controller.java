@@ -1,26 +1,38 @@
 package view;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
+import model.Model;
 
 import java.io.File;
 
 
 public class Controller {
+    @FXML private ListView<String> left_pannel;
+    @FXML private ListView<String> right_pannel;
+    private ObservableList<String> left_list;
+    private ObservableList<String> right_list;
 
     private Alert alert;
     static private  int left = 0;
     static private  int right = 1;
+    private Model model = new Model();
 
     @FXML
     protected void l_load_file(ActionEvent event) {
         File file = fileChooser(event);
 
         if (file != null) {
-
+            model.loadFile(file,left);
+            left_list = FXCollections.observableList(model.getLeftText());
+            left_pannel.setItems(left_list);
         }
     }
 
@@ -29,7 +41,9 @@ public class Controller {
         File file = fileChooser(event);
 
         if(file != null){
-
+            model.loadFile(file,right);
+            right_list = FXCollections.observableList(model.getRightText());
+            right_pannel.setItems(right_list);
         }
     }
 
