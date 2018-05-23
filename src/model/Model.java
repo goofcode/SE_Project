@@ -72,5 +72,4 @@ public class Model {
     public ArrayList<String> getRightText(){
         return rightText;
     }
-
 }
