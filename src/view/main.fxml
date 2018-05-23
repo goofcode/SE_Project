@@ -17,7 +17,7 @@
          <children>
             <BorderPane>
                <center>
-                  <ListView />
+                  <ListView fx:id="left_pannel"/>
                </center>
                <top>
                   <FlowPane hgap="8.0" prefHeight="16.0" prefWidth="350.0">
@@ -34,7 +34,7 @@
             </BorderPane>
             <BorderPane GridPane.columnIndex="1">
                <center>
-                  <ListView />
+                  <ListView fx:id="right_pannel"/>
                </center>
                <top>
                   <FlowPane hgap="8.0" prefHeight="16.0" prefWidth="350.0" BorderPane.alignment="CENTER">
