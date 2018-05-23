@@ -28,7 +28,7 @@ public class Controller {
     private ObservableList<String> right_list;
     private FileManager left_fileManager = new FileManager();
     private FileManager right_fileManager = new FileManager();
-    private boolean loadFlag[]=new boolean[][2];
+    private boolean loadFlag[] = new boolean[2];
     private Alert alert;
     Controller(){
         l_save_btn.setDisable(true);
