@@ -6,26 +6,17 @@ import java.util.ArrayList;
 
 public class FileManager {
     // 왼쪽이 0 오른쪽이 1
-    File[] files = new File[2];
+    private File file;
 
-    ArrayList<String> leftText = new ArrayList<String>();
-    ArrayList<String> rightText = new ArrayList<String>();
+    ArrayList<String> text = new ArrayList<String>();
 
-    public void loadFile(File file, int side) {
-        files[side] = file;
+    public void loadFile(File file) {
         try {
+            this.file = file;
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = null;
-            while ((line = reader.readLine()) != null) {
-                switch (side) {
-                    case 0:
-                        leftText.add(line);
-                        break;
-                    case 1:
-                        rightText.add(line);
-                        break;
-                }
-            }
+            while ((line = reader.readLine()) != null)
+                text.add(line);
             reader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -34,25 +25,13 @@ public class FileManager {
         }
     }
 
-    public void saveFile(File file, int side) throws IOException {
+    public void saveFile(File file) throws IOException {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file.getPath() + ".txt"));
 
-            switch (side) {
-                case 0: {
-                    for (String str : leftText) {
-                        writer.write(str);
-                        writer.newLine();
-                    }
-                    break;
-                }
-                case 1: {
-                    for (String str : rightText) {
-                        writer.write(str);
-                        writer.newLine();
-                    }
-                    break;
-                }
+            for (String str : text) {
+                writer.write(str);
+                writer.newLine();
             }
             writer.flush();
             writer.close();
@@ -61,15 +40,17 @@ public class FileManager {
         }
     }
 
-    public File getFile(int side){
-        return files[side];
+    public void clearText(){
+        this.file = null;
+        text.clear();
     }
 
-    public ArrayList<String> getLeftText(){
-        return leftText;
+    public File getFile(){
+        return this.file;
     }
 
-    public ArrayList<String> getRightText(){
-        return rightText;
+    public ArrayList<String> getText(){
+        return text;
     }
+
 }
