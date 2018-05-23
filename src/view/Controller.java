@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import model.FileManager;
@@ -16,22 +17,42 @@ import java.io.File;
 public class Controller {
     @FXML private ListView<String> left_pannel;
     @FXML private ListView<String> right_pannel;
+    @FXML private Button l_load_btn = new Button();
+    @FXML private Button l_save_btn = new Button();
+    @FXML private Button l_edit_btn = new Button();
+    @FXML private Button r_load_btn = new Button();
+    @FXML private Button r_edit_btn = new Button();
+    @FXML private Button r_save_btn = new Button();
+    @FXML private Button comp_btn = new Button();
     private ObservableList<String> left_list;
     private ObservableList<String> right_list;
-
+    private FileManager left_fileManager = new FileManager();
+    private FileManager right_fileManager = new FileManager();
+    private boolean loadFlag[]=new boolean[][2];
     private Alert alert;
-    static private  int left = 0;
-    static private  int right = 1;
-    private FileManager fileManager = new FileManager();
+    Controller(){
+        l_save_btn.setDisable(true);
+        l_edit_btn.setDisable(true);
+        r_edit_btn.setDisable(true);
+        r_save_btn.setDisable(true);
+        comp_btn.setDisable(true);
+        loadFlag[0] = loadFlag[1] = false;
+    }
+
 
     @FXML
     protected void l_load_file(ActionEvent event) {
         File file = fileChooser(event);
 
         if (file != null) {
-            fileManager.loadFile(file,left);
-            left_list = FXCollections.observableList(fileManager.getLeftText());
+            left_fileManager.clearText();
+            left_fileManager.loadFile(file);
+            left_list = FXCollections.observableList(left_fileManager.getText());
             left_pannel.setItems(left_list);
+            l_save_btn.setDisable(false);
+            l_edit_btn.setDisable(false);
+            loadFlag[0] = true;
+            loadFlagCheck();
         }
     }
 
@@ -40,9 +61,15 @@ public class Controller {
         File file = fileChooser(event);
 
         if(file != null){
-            fileManager.loadFile(file,right);
-            right_list = FXCollections.observableList(fileManager.getRightText());
+            right_fileManager.clearText();
+            right_fileManager.loadFile(file);
+            right_list = FXCollections.observableList(right_fileManager.getText());
             right_pannel.setItems(right_list);
+            r_save_btn.setDisable(false);
+            r_edit_btn.setDisable(false);
+            loadFlag[1] =true;
+            loadFlagCheck();
+
         }
     }
 
@@ -76,5 +103,9 @@ public class Controller {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(((Node)event.getSource()).getScene().getWindow());
         return file;
+    }
+    private void loadFlagCheck(){
+        if(loadFlag[0]==true && loadFlag[1]==true)
+            comp_btn.setDisable(false);
     }
 }
