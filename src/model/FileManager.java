@@ -4,7 +4,7 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Model {
+public class FileManager {
     // 왼쪽이 0 오른쪽이 1
     File[] files = new File[2];
 
