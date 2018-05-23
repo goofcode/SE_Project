@@ -30,7 +30,8 @@ public class Controller {
     private FileManager right_fileManager = new FileManager();
     private boolean loadFlag[] = new boolean[2];
     private Alert alert;
-    Controller(){
+
+    public Controller(){
         l_save_btn.setDisable(true);
         l_edit_btn.setDisable(true);
         r_edit_btn.setDisable(true);
