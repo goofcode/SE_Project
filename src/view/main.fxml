@@ -17,7 +17,7 @@
          <children>
             <BorderPane>
                <center>
-                  <ListView fx:id="left_pannel"/>
+                  <ListView fx:id="left_pannel" editable="false"/>
                </center>
                <top>
                   <FlowPane hgap="8.0" prefHeight="16.0" prefWidth="350.0">
@@ -25,6 +25,7 @@
                         <Button fx:id="l_load_btn" minWidth="70.0" mnemonicParsing="false"   onAction="#l_load_file" text="Load" />
                         <Button fx:id="l_edit_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#l_edit_file" text="Edit" />
                         <Button fx:id="l_save_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#l_save_file" text="Save" />
+                        <Button fx:id="l_copy_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#l_copy_file" text="Copy" />
                      </children>
                      <BorderPane.margin>
                         <Insets bottom="7.0" left="10.0" top="7.0" />
@@ -34,7 +35,7 @@
             </BorderPane>
             <BorderPane GridPane.columnIndex="1">
                <center>
-                  <ListView fx:id="right_pannel"/>
+                  <ListView fx:id="right_pannel" editable="false"/>
                </center>
                <top>
                   <FlowPane hgap="8.0" prefHeight="16.0" prefWidth="350.0" BorderPane.alignment="CENTER">
@@ -42,6 +43,7 @@
                         <Button fx:id="r_load_btn" minWidth="70.0" mnemonicParsing="false" onAction="#r_load_file" text="Load" />
                         <Button fx:id="r_edit_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#r_edit_file" text="Edit" />
                         <Button fx:id="r_save_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#r_save_file" text="Save" />
+                        <Button fx:id="r_save_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#r_copy_file" text="Copy" />
                      </children>
                      <BorderPane.margin>
                         <Insets bottom="7.0" left="10.0" top="7.0" />
