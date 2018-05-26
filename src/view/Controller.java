@@ -39,67 +39,44 @@ public class Controller {
     private FileManager right_fileManager = new FileManager();
     private boolean loadFlag[] = new boolean[2];
     private boolean editFlag[] = new boolean[2];
-    private int edited = -1;
+    private static final int LEFT = 0;
+    private static final int RIGHT =1;
     private Alert alert;
 
     public Controller(){
-        loadFlag[0] = loadFlag[1] = false;
-        editFlag[0] = editFlag[1] = false;
+        loadFlag[LEFT] = loadFlag[RIGHT] = false;
+        editFlag[LEFT] = editFlag[RIGHT] = true;
     }
 
 
     @FXML
     protected void l_load_file(ActionEvent event) {
-        File file = fileChooser(event);
-        left_textarea.setVisible(false);
-        left_pannel.setVisible(true);
-        if (file != null) {
-            left_fileManager.clearText();
-            left_fileManager.loadFile(file);
-            left_list = FXCollections.observableList(left_fileManager.getText());
-            left_pannel.setItems(left_list);
+        if(loadFile(event,left_fileManager,left_list,left_pannel,LEFT)){
             l_save_btn.setDisable(false);
             l_edit_btn.setDisable(false);
-            loadFlag[0] = true;
-            loadFlagCheck();
         }
     }
 
     @FXML
     protected void r_load_file(ActionEvent event){
-        File file = fileChooser(event);
-
-        if(file != null){
-            right_fileManager.clearText();
-            right_fileManager.loadFile(file);
-            right_list = FXCollections.observableList(right_fileManager.getText());
-            right_pannel.setItems(right_list);
+        if(loadFile(event,right_fileManager,right_list,right_pannel,RIGHT)){
             r_save_btn.setDisable(false);
             r_edit_btn.setDisable(false);
-            loadFlag[1] =true;
-            loadFlagCheck();
-
         }
     }
 
     @FXML
     protected void l_edit_file(ActionEvent event){
 
-        if(editFlag[0]){
-            System.out.println("left_edit_file toggle off!");
-            editFlag[0] = false;
-            left_pannel.setEditable(false);
-        }
-        else
-            editFlag[0] = true;
-
-        if(editFlag[0]) {
+        if(editFlag[LEFT]) {
             System.out.println("left_edit_file toggle on!");
-            ListTotxtArea(left_pannel,left_fileManager,left_textarea);
+            editFlag[LEFT] = false;
+            swapListViewToTextArea(left_pannel,left_fileManager,left_textarea);
         }
-        else if(!editFlag[0]){
-            txtAreaToList(left_textarea, left_fileManager, left_list, left_pannel);
-
+        else if(!editFlag[LEFT]){
+            System.out.println("left_edit_file toggle off!");
+            editFlag[LEFT] = true;
+            swapTextAreaToListView(left_textarea, left_fileManager, left_list, left_pannel);
         }
     }
 
@@ -112,23 +89,17 @@ public class Controller {
 
     @FXML
     protected void r_edit_file(ActionEvent event){
-        if(editFlag[1]){
-            System.out.println("right_edit_file toggle off!");
-            editFlag[1] = false;
-            right_pannel.setEditable(false);
-        }
-        else
-            editFlag[1] = true;
 
-        if(editFlag[1]) {
+        if(editFlag[RIGHT]) {
             System.out.println("right_edit_file toggle on!");
-            ListTotxtArea(right_pannel,right_fileManager,right_textarea);
+            editFlag[RIGHT] = false;
+            swapListViewToTextArea(right_pannel,right_fileManager,right_textarea);
         }
-        else if(!editFlag[1]) {
-            txtAreaToList(right_textarea, right_fileManager, right_list, right_pannel);
+        else if(!editFlag[RIGHT]) {
+            System.out.println("right_edit_file toggle off!");
+            editFlag[RIGHT] = true;
+            swapTextAreaToListView(right_textarea, right_fileManager, right_list, right_pannel);
         }
-
-
     }
     @FXML
     protected void l_copy_file(ActionEvent event){
@@ -157,7 +128,7 @@ public class Controller {
         if(loadFlag[0]==true && loadFlag[1]==true)
             comp_btn.setDisable(false);
     }
-    private void txtAreaToList(TextArea area, FileManager manager,ObservableList<String> list,ListView<String> pannel){
+    private void swapTextAreaToListView(TextArea area, FileManager manager,ObservableList<String> list,ListView<String> pannel){
         ArrayList<String> k = new ArrayList<String>();
         for(CharSequence sequence :  area.getParagraphs()){
             k.add(sequence.toString());
@@ -171,7 +142,7 @@ public class Controller {
         area.setVisible(false);
         pannel.setVisible(true);
     }
-    private void ListTotxtArea(ListView<String> pannel, FileManager manager, TextArea area){
+    private void swapListViewToTextArea(ListView<String> pannel, FileManager manager, TextArea area){
 
         pannel.setVisible(false);
         String text ="";
@@ -185,6 +156,21 @@ public class Controller {
         area.setText(text);
         area.setVisible(true);
         area.setEditable(true);
+    }
+
+    private Boolean loadFile(ActionEvent event,FileManager manager, ObservableList<String > list,ListView<String> pannel, int side){
+        File file = fileChooser(event);
+        if(file != null){
+            manager.clearText();
+            manager.loadFile(file);
+            list = FXCollections.observableList(manager.getText());
+            pannel.setItems(list);
+            loadFlag[side] = true;
+            loadFlagCheck();
+            return true;
+        }
+       else
+           return false;
     }
 
 }

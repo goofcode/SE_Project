@@ -26,9 +26,7 @@ public class FileManager {
     }
 
     public void setText(ArrayList<String> k) {
-      text.clear();
-      for(int i=0;i<k.size();i++)
-          text.add(k.get(i));
+      text = (ArrayList<String>)k.clone();
     }
 
     public void saveFile(File file) throws IOException {
