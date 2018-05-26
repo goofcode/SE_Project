@@ -45,69 +45,79 @@ public class Controller {
 
 
     @FXML
-    protected void l_load_file(ActionEvent event) {
-        if(loadFile(event,LEFT)){
-            l_save_btn.setDisable(false);
-            l_edit_btn.setDisable(false);
-        }
-    }
+    protected void load_file(ActionEvent event) {
 
-    @FXML
-    protected void r_load_file(ActionEvent event){
-        if(loadFile(event,RIGHT)){
-            r_save_btn.setDisable(false);
-            r_edit_btn.setDisable(false);
-        }
-    }
-
-    @FXML
-    protected void l_edit_file(ActionEvent event){
-
-        if(editFlag[LEFT]) {
-            System.out.println("left_edit_file toggle on!");
-            editFlag[LEFT] = false;
-            swapListViewToTextArea( LEFT);
+        String btn_name = ((Node)event.getSource()).getId().toString();
+        if(btn_name.equals("l_load_btn")) {
+            if (loadFile(event, LEFT)) {
+                l_save_btn.setDisable(false);
+                l_edit_btn.setDisable(false);
+            }
         }
         else{
-            System.out.println("left_edit_file toggle off!");
-            editFlag[LEFT] = true;
-            swapTextAreaToListView( LEFT);
+            if(loadFile(event,RIGHT)){
+                r_save_btn.setDisable(false);
+                r_edit_btn.setDisable(false);
+            }
         }
     }
 
-    @FXML
-    protected void l_save_file(ActionEvent event){
-        System.out.println("left_save_file click!");
-    }
-
 
 
     @FXML
-    protected void r_edit_file(ActionEvent event){
-
-        if(editFlag[RIGHT]) {
-            System.out.println("right_edit_file toggle on!");
-            editFlag[RIGHT] = false;
-            swapListViewToTextArea(RIGHT);
+    protected void edit_file(ActionEvent event){
+        String btn_name = ((Node)event.getSource()).getId().toString();
+        if(btn_name.equals("l_edit_btn")) {
+            if (editFlag[LEFT]) {
+                System.out.println("left_edit_file toggle on!");
+                editFlag[LEFT] = false;
+                swapListViewToTextArea(LEFT);
+            } else {
+                System.out.println("left_edit_file toggle off!");
+                editFlag[LEFT] = true;
+                swapTextAreaToListView(LEFT);
+            }
         }
         else{
-            System.out.println("right_edit_file toggle off!");
-            editFlag[RIGHT] = true;
-            swapTextAreaToListView(RIGHT);
+            if(editFlag[RIGHT]) {
+                System.out.println("right_edit_file toggle on!");
+                editFlag[RIGHT] = false;
+                swapListViewToTextArea(RIGHT);
+            }
+            else{
+                System.out.println("right_edit_file toggle off!");
+                editFlag[RIGHT] = true;
+                swapTextAreaToListView(RIGHT);
+            }
         }
     }
+
     @FXML
-    protected void l_copy_file(ActionEvent event){
-        System.out.println("left_copy click!");
+    protected void save_file(ActionEvent event){
+        String btn_name = ((Node)event.getSource()).getId().toString();
+        if(btn_name.equals("l_save_btn")){
+            System.out.println("left_save_file click!");
+        }
+        else {
+            System.out.println("right_save_file click!");
+        }
+
     }
+
+
+
+
     @FXML
-    protected void r_save_file(ActionEvent event){
-        System.out.println("right_save_file click!");
+    protected void copy_file(ActionEvent event){
+        String btn_name = ((Node)event.getSource()).getId().toString();
+        if(btn_name.equals("l_copy_btn")) {
+            System.out.println("left_copy click!");
+        }
+        else{
+            System.out.println("right_copy click!");
+        }
     }
-    @FXML
-    protected void r_copy_file(ActionEvent event){
-        System.out.println("right_copy click!");
-    }
+
 
     @FXML
     protected void compare_file(ActionEvent event){
