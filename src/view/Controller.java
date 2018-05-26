@@ -39,8 +39,8 @@ public class Controller {
         loadFlag[LEFT] = loadFlag[RIGHT] = false;
         editFlag[LEFT] = editFlag[RIGHT] = true;
         list = new ObservableList[2];
-        fileManager[0] = new FileManager();
-        fileManager[1] = new FileManager();
+        fileManager[LEFT] = new FileManager();
+        fileManager[RIGHT] = new FileManager();
     }
 
 
@@ -125,7 +125,7 @@ public class Controller {
     private void swapTextAreaToListView(int side){
         TextArea area;
         ListView<String> panel;
-        if(side == 0){
+        if(side == LEFT){
             area = left_textarea;
             panel = left_pannel;
         }
@@ -149,7 +149,7 @@ public class Controller {
     private void swapListViewToTextArea(int side){
         ListView<String> panel;
         TextArea area;
-        if(side ==0){
+        if(side ==LEFT){
             panel = left_pannel;
             area = left_textarea;
         }
@@ -174,7 +174,7 @@ public class Controller {
 
     private Boolean loadFile(ActionEvent event, int side){
         ListView<String> panel;
-        if(side ==0)
+        if(side ==LEFT)
             panel = left_pannel;
         else
             panel = right_pannel;
