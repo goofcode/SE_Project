@@ -25,6 +25,10 @@ public class FileManager {
         }
     }
 
+    public void setText(ArrayList<String> k) {
+      text = (ArrayList<String>)k.clone();
+    }
+
     public void saveFile(File file) throws IOException {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file.getPath() + ".txt"));
