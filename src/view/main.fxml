@@ -27,10 +27,10 @@
                <top>
                   <FlowPane hgap="8.0" prefHeight="16.0" prefWidth="350.0">
                      <children>
-                        <Button fx:id="l_load_btn" minWidth="70.0" mnemonicParsing="false"   onAction="#l_load_file" text="Load" />
-                        <Button fx:id="l_edit_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#l_edit_file" text="Edit" />
-                        <Button fx:id="l_save_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#l_save_file" text="Save" />
-                        <Button fx:id="l_copy_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#l_copy_file" text="Copy" />
+                        <Button fx:id="l_load_btn"  minWidth="70.0" mnemonicParsing="false"   onAction="#load_file" text="Load" />
+                        <Button fx:id="l_edit_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#edit_file" text="Edit" />
+                        <Button fx:id="l_save_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#save_file" text="Save" />
+                        <Button fx:id="l_copy_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#copy_file" text="Copy" />
                      </children>
                      <BorderPane.margin>
                         <Insets bottom="7.0" left="10.0" top="7.0" />
@@ -49,10 +49,10 @@
                <top>
                   <FlowPane hgap="8.0" prefHeight="16.0" prefWidth="350.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="r_load_btn" minWidth="70.0" mnemonicParsing="false" onAction="#r_load_file" text="Load" />
-                        <Button fx:id="r_edit_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#r_edit_file" text="Edit" />
-                        <Button fx:id="r_save_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#r_save_file" text="Save" />
-                        <Button fx:id="r_copy_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#r_copy_file" text="Copy" />
+                        <Button fx:id="r_load_btn" minWidth="70.0" mnemonicParsing="false" onAction="#load_file" text="Load" />
+                        <Button fx:id="r_edit_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#edit_file" text="Edit" />
+                        <Button fx:id="r_save_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#save_file" text="Save" />
+                        <Button fx:id="r_copy_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#copy_file" text="Copy" />
                      </children>
                      <BorderPane.margin>
                         <Insets bottom="7.0" left="10.0" top="7.0" />
