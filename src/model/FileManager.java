@@ -25,6 +25,12 @@ public class FileManager {
         }
     }
 
+    public void setText(ArrayList<String> k) {
+      text.clear();
+      for(int i=0;i<k.size();i++)
+          text.add(k.get(i));
+    }
+
     public void saveFile(File file) throws IOException {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file.getPath() + ".txt"));

@@ -7,10 +7,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
@@ -24,6 +21,8 @@ import java.util.ArrayList;
 public class Controller {
     @FXML private ListView<String> left_pannel;
     @FXML private ListView<String> right_pannel;
+    @FXML private TextArea left_textarea;
+    @FXML private TextArea right_textarea;
     @FXML private Button l_load_btn = new Button();
     @FXML private Button l_save_btn = new Button();
     @FXML private Button l_edit_btn = new Button();
@@ -52,7 +51,8 @@ public class Controller {
     @FXML
     protected void l_load_file(ActionEvent event) {
         File file = fileChooser(event);
-
+        left_textarea.setVisible(false);
+        left_pannel.setVisible(true);
         if (file != null) {
             left_fileManager.clearText();
             left_fileManager.loadFile(file);
@@ -90,50 +90,17 @@ public class Controller {
             editFlag[0] = false;
             left_pannel.setEditable(false);
         }
-
         else
             editFlag[0] = true;
+
         if(editFlag[0]) {
             System.out.println("left_edit_file toggle on!");
-            left_pannel.setEditable(true);
-            //TODO Editable pannel
-            left_pannel.setCellFactory(TextFieldListCell.forListView());
-            left_pannel.getSelectionModel().selectFirst();
-            left_pannel.setOnEditStart(new EventHandler<ListView.EditEvent<String>>() {
-                @Override
-                public void handle(ListView.EditEvent<String> event) {
-                    System.out.println("Start");
-
-                }
-            });
-            left_pannel.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
-                @Override
-                public void handle(ListView.EditEvent<String> event) {
-                    System.out.println("commited");
-                    edited =1;
-                    //left_pannel.getItems().set(event.getIndex(), event.getNewValue());
-
-                }
-
-            });
-            left_pannel.setOnEditCancel(new EventHandler<ListView.EditEvent<String>>() {
-                @Override
-                public void handle(ListView.EditEvent<String> event) {
-                    System.out.println("canceled");
-                    left_pannel.edit(event.getIndex());
-
-
-                }
-            });
-
+            ListTotxtArea(left_pannel,left_fileManager,left_textarea);
+        }
+        else if(!editFlag[0]){
+            txtAreaToList(left_textarea, left_fileManager, left_list, left_pannel);
 
         }
-
-
-
-
-
-
     }
 
     @FXML
@@ -145,8 +112,22 @@ public class Controller {
 
     @FXML
     protected void r_edit_file(ActionEvent event){
-        System.out.println("right_edit_file click!");
-        right_pannel.setEditable(true);
+        if(editFlag[1]){
+            System.out.println("right_edit_file toggle off!");
+            editFlag[1] = false;
+            right_pannel.setEditable(false);
+        }
+        else
+            editFlag[1] = true;
+
+        if(editFlag[1]) {
+            System.out.println("right_edit_file toggle on!");
+            ListTotxtArea(right_pannel,right_fileManager,right_textarea);
+        }
+        else if(!editFlag[1]) {
+            txtAreaToList(right_textarea, right_fileManager, right_list, right_pannel);
+        }
+
 
     }
     @FXML
@@ -176,4 +157,34 @@ public class Controller {
         if(loadFlag[0]==true && loadFlag[1]==true)
             comp_btn.setDisable(false);
     }
+    private void txtAreaToList(TextArea area, FileManager manager,ObservableList<String> list,ListView<String> pannel){
+        ArrayList<String> k = new ArrayList<String>();
+        for(CharSequence sequence :  area.getParagraphs()){
+            k.add(sequence.toString());
+        }
+
+        manager.setText(k);
+
+        list = FXCollections.observableList(manager.getText());
+        pannel.setItems(list);
+        area.setEditable(false);
+        area.setVisible(false);
+        pannel.setVisible(true);
+    }
+    private void ListTotxtArea(ListView<String> pannel, FileManager manager, TextArea area){
+
+        pannel.setVisible(false);
+        String text ="";
+        for(int i =0; i < pannel.getItems().size();i++){
+            if(i <  pannel.getItems().size()-1)
+                text += manager.getText().get(i)+"\n";
+            else
+                text += manager.getText().get(i);
+        }
+
+        area.setText(text);
+        area.setVisible(true);
+        area.setEditable(true);
+    }
+
 }
