@@ -31,7 +31,7 @@ public class FileManager {
 
     public void saveFile(File file) throws IOException {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file.getPath() + ".txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file.getPath()));
 
             for (String str : text) {
                 writer.write(str);

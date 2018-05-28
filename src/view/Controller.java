@@ -15,8 +15,10 @@ import model.FileManager;
 import sun.font.GlyphLayout;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 
 public class Controller {
@@ -24,9 +26,11 @@ public class Controller {
     private static final int RIGHT =1;
     @FXML private ListView<String> left_pannel;
     @FXML private ListView<String> right_pannel;
+
     @FXML private TextArea left_textarea;
     @FXML private TextArea right_textarea;
     @FXML private Button l_load_btn, l_save_btn, l_edit_btn ,r_load_btn, r_copy_btn, l_copy_btn, r_edit_btn, r_save_btn,comp_btn;
+
 
     private ObservableList<String>[] list;
     private FileManager[] fileManager =new FileManager[2];
@@ -97,9 +101,13 @@ public class Controller {
         String btn_name = ((Node)event.getSource()).getId().toString();
         if(btn_name.equals("l_save_btn")){
             System.out.println("left_save_file click!");
+            if(saveFile(LEFT))
+                System.out.println("save done!");
         }
         else {
             System.out.println("right_save_file click!");
+            if(saveFile(RIGHT))
+                System.out.println("save done!");
         }
 
     }
@@ -202,4 +210,13 @@ public class Controller {
            return false;
     }
 
+    private Boolean saveFile(int side){
+        try {
+            fileManager[side].saveFile(fileManager[side].getFile());
+            return true;
+        }catch (IOException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

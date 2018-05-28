@@ -19,7 +19,7 @@
                <center>
                   <StackPane >
                      <ListView fx:id="left_pannel" editable="false" visible="true" />
-                     <TextArea fx:id="left_textarea" editable="false" visible="false"  />
+                     <TextArea fx:id="left_textarea" editable="false" visible="false"   />
                   </StackPane>
 
 
