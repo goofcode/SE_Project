@@ -23,23 +23,28 @@ import java.util.logging.Level;
 
 public class Controller {
     private static final int LEFT = 0;
-    private static final int RIGHT =1;
-    @FXML private ListView<String> left_pannel;
-    @FXML private ListView<String> right_pannel;
+    private static final int RIGHT = 1;
+    @FXML
+    private ListView<String> left_pannel;
+    @FXML
+    private ListView<String> right_pannel;
 
-    @FXML private TextArea left_textarea;
-    @FXML private TextArea right_textarea;
-    @FXML private Button l_load_btn, l_save_btn, l_edit_btn ,r_load_btn, r_copy_btn, l_copy_btn, r_edit_btn, r_save_btn,comp_btn;
+    @FXML
+    private TextArea left_textarea;
+    @FXML
+    private TextArea right_textarea;
+    @FXML
+    private Button l_load_btn, l_save_btn, l_edit_btn, r_load_btn, r_copy_btn, l_copy_btn, r_edit_btn, r_save_btn, comp_btn;
 
 
     private ObservableList<String>[] list;
-    private FileManager[] fileManager =new FileManager[2];
+    private FileManager[] fileManager = new FileManager[2];
     private boolean loadFlag[] = new boolean[2];
     private boolean editFlag[] = new boolean[2];
 
     private Alert alert;
 
-    public Controller(){
+    public Controller() {
         loadFlag[LEFT] = loadFlag[RIGHT] = false;
         editFlag[LEFT] = editFlag[RIGHT] = true;
         list = new ObservableList[2];
@@ -51,15 +56,14 @@ public class Controller {
     @FXML
     protected void load_file(ActionEvent event) {
 
-        String btn_name = ((Node)event.getSource()).getId().toString();
-        if(btn_name.equals("l_load_btn")) {
+        String btn_name = ((Node) event.getSource()).getId();
+        if (btn_name.equals("l_load_btn")) {
             if (loadFile(event, LEFT)) {
                 l_save_btn.setDisable(false);
                 l_edit_btn.setDisable(false);
             }
-        }
-        else{
-            if(loadFile(event,RIGHT)){
+        } else {
+            if (loadFile(event, RIGHT)) {
                 r_save_btn.setDisable(false);
                 r_edit_btn.setDisable(false);
             }
@@ -67,11 +71,10 @@ public class Controller {
     }
 
 
-
     @FXML
-    protected void edit_file(ActionEvent event){
-        String btn_name = ((Node)event.getSource()).getId().toString();
-        if(btn_name.equals("l_edit_btn")) {
+    protected void edit_file(ActionEvent event) {
+        String btn_name = ((Node) event.getSource()).getId();
+        if (btn_name.equals("l_edit_btn")) {
             if (editFlag[LEFT]) {
                 System.out.println("left_edit_file toggle on!");
                 editFlag[LEFT] = false;
@@ -81,14 +84,12 @@ public class Controller {
                 editFlag[LEFT] = true;
                 swapTextAreaToListView(LEFT);
             }
-        }
-        else{
-            if(editFlag[RIGHT]) {
+        } else {
+            if (editFlag[RIGHT]) {
                 System.out.println("right_edit_file toggle on!");
                 editFlag[RIGHT] = false;
                 swapListViewToTextArea(RIGHT);
-            }
-            else{
+            } else {
                 System.out.println("right_edit_file toggle off!");
                 editFlag[RIGHT] = true;
                 swapTextAreaToListView(RIGHT);
@@ -97,62 +98,58 @@ public class Controller {
     }
 
     @FXML
-    protected void save_file(ActionEvent event){
-        String btn_name = ((Node)event.getSource()).getId().toString();
-        if(btn_name.equals("l_save_btn")){
+    protected void save_file(ActionEvent event) {
+        String btn_name = ((Node) event.getSource()).getId();
+        if (btn_name.equals("l_save_btn")) {
             System.out.println("left_save_file click!");
-            if(saveFile(LEFT))
+            if (saveFile(LEFT))
                 System.out.println("save done!");
-        }
-        else {
+        } else {
             System.out.println("right_save_file click!");
-            if(saveFile(RIGHT))
+            if (saveFile(RIGHT))
                 System.out.println("save done!");
         }
-
     }
 
 
-
-
     @FXML
-    protected void copy_file(ActionEvent event){
-        String btn_name = ((Node)event.getSource()).getId().toString();
-        if(btn_name.equals("l_copy_btn")) {
+    protected void copy_file(ActionEvent event) {
+        String btn_name = ((Node) event.getSource()).getId();
+        if (btn_name.equals("l_copy_btn")) {
             System.out.println("left_copy click!");
-        }
-        else{
+        } else {
             System.out.println("right_copy click!");
         }
     }
 
 
     @FXML
-    protected void compare_file(ActionEvent event){
+    protected void compare_file(ActionEvent event) {
         System.out.println("compare_file click!");
     }
 
-    private File fileChooser(ActionEvent event){
+    private File fileChooser(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        return fileChooser.showOpenDialog(((Node)event.getSource()).getScene().getWindow());
+        return fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
     }
-    private void loadFlagCheck(){
-        if(loadFlag[LEFT] && loadFlag[RIGHT])
+
+    private void loadFlagCheck() {
+        if (loadFlag[LEFT] && loadFlag[RIGHT])
             comp_btn.setDisable(false);
     }
-    private void swapTextAreaToListView(int side){
+
+    private void swapTextAreaToListView(int side) {
         TextArea area;
         ListView<String> panel;
-        if(side == LEFT){
+        if (side == LEFT) {
             area = left_textarea;
             panel = left_pannel;
-        }
-        else{
+        } else {
             area = right_textarea;
             panel = right_pannel;
         }
         ArrayList<String> k = new ArrayList<String>();
-        for(CharSequence sequence :  area.getParagraphs()){
+        for (CharSequence sequence : area.getParagraphs()) {
             k.add(sequence.toString());
         }
 
@@ -164,22 +161,22 @@ public class Controller {
         area.setVisible(false);
         panel.setVisible(true);
     }
-    private void swapListViewToTextArea(int side){
+
+    private void swapListViewToTextArea(int side) {
         ListView<String> panel;
         TextArea area;
-        if(side ==LEFT){
+        if (side == LEFT) {
             panel = left_pannel;
             area = left_textarea;
-        }
-        else{
+        } else {
             panel = right_pannel;
             area = right_textarea;
         }
 
         panel.setVisible(false);
         StringBuilder text = new StringBuilder();
-        for(int i =0; i < panel.getItems().size();i++){
-            if(i <  panel.getItems().size()-1)
+        for (int i = 0; i < panel.getItems().size(); i++) {
+            if (i < panel.getItems().size() - 1)
                 text.append(fileManager[side].getText().get(i)).append("\n");
             else
                 text.append(fileManager[side].getText().get(i));
@@ -190,14 +187,15 @@ public class Controller {
         area.setEditable(true);
     }
 
-    private Boolean loadFile(ActionEvent event, int side){
+    private Boolean loadFile(ActionEvent event, int side) {
         ListView<String> panel;
-        if(side ==LEFT)
-            panel = left_pannel;
-        else
-            panel = right_pannel;
+
+        if (side == LEFT) panel = left_pannel;
+        else panel = right_pannel;
+
         File file = fileChooser(event);
-        if(file != null){
+
+        if (file != null) {
             fileManager[side].clearText();
             fileManager[side].loadFile(file);
             list[side] = FXCollections.observableList(fileManager[side].getText());
@@ -206,15 +204,15 @@ public class Controller {
             loadFlagCheck();
             return true;
         }
-       else
-           return false;
+        else
+            return false;
     }
 
-    private Boolean saveFile(int side){
+    private Boolean saveFile(int side) {
         try {
             fileManager[side].saveFile(fileManager[side].getFile());
             return true;
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
