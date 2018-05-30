@@ -40,8 +40,8 @@ public class LCS {
             for (int j = 0; j < len2 + 1; j++)
                 check[i][j] = 0;
 
-        for (int i = 1; i < len1 + 1; i++) {
-            for (int j = 1; j < len2 + 1; j++) {
+        for (int i = 1; i < len1 ; i++) {
+            for (int j = 1; j < len2 ; j++) {
 
                 // 현재 비교하는 값이 서로 같다면, lcs는 + 1
                 if (lLine.charAt(i) == rLine.charAt(j)) {

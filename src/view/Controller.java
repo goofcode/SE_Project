@@ -3,24 +3,20 @@ package view;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldListCell;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
+import model.Diff.DiffSequence;
+import model.Diff.LCS;
+import model.Diff.Seq;
 import model.FileManager;
-import sun.font.GlyphLayout;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-
+import java.util.HashMap;
 
 public class Controller {
     private static final int LEFT = 0;
@@ -37,14 +33,12 @@ public class Controller {
     @FXML
     private Button l_load_btn, l_save_btn, l_edit_btn, r_load_btn, r_copy_btn, l_copy_btn, r_edit_btn, r_save_btn, comp_btn;
 
-
     private ObservableList<String>[] list;
     private FileManager[] fileManager = new FileManager[2];
     private boolean loadFlag[] = new boolean[2];
     private boolean editFlag[] = new boolean[2];
 
     private Alert alert;
-
     public Controller() {
         loadFlag[LEFT] = loadFlag[RIGHT] = false;
         editFlag[LEFT] = editFlag[RIGHT] = true;
@@ -63,6 +57,7 @@ public class Controller {
 
                 l_save_btn.setDisable(false);
                 l_edit_btn.setDisable(false);
+
             }
         } else {
             if (loadFile(event, RIGHT)) {
@@ -125,14 +120,38 @@ public class Controller {
     }
 
 
+
     @FXML
     protected void compare_file(ActionEvent event) {
         System.out.println("compare_file click!");
+        //execute lcs algorithm
+        LCS lcs = new LCS();
+        HashMap<String, ArrayList<ArrayList<Seq>>> result = lcs.getDismatch(fileManager[LEFT].getText(), fileManager[RIGHT].getText());
+
+        for (int i = 0; i < result.get("left").size(); i++) {
+            left_pannel.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+                @Override
+                public ListCell<String> call(ListView<String> list) {
+                    return new DiffSequence();
+                }
+            });
+        }
+
+        for (int i = 0; i < result.get("left").size(); i++) {
+
+            right_pannel.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+                @Override
+                public ListCell<String> call(ListView<String> list) {
+                    return new DiffSequence();
+                }
+            });
+
+        }
     }
 
     private File fileChooser(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
-        return fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
+        return fileChooser.showOpenDialog(((Node)event.getSource()).getScene().getWindow());
     }
 
     private void loadFlagCheck() {
@@ -219,32 +238,5 @@ public class Controller {
             return false;
         }
     }
-    private void setColor(int side){
-        if(side==LEFT) {
-            left_pannel.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-                @Override
-                public ListCell<String> call(ListView<String> list) {
-                    return new MyFormatCell();
-                }
-            });
-        }
-        else{
-                right_pannel.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-                @Override
-                public ListCell<String> call(ListView<String> list) {
-                    return new MyFormatCell();
-                }
-            });
-        }
-    }
 
-    public class MyFormatCell extends ListCell<String >{
-        @Override
-        protected void updateItem(String Item, boolean empty) {
-            super.updateItem(Item,empty);
-            setText(Item);
-            setTextFill(Color.RED);
-
-        }
-    }
 }
