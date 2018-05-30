@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import model.FileManager;
@@ -59,6 +60,7 @@ public class Controller {
         String btn_name = ((Node) event.getSource()).getId();
         if (btn_name.equals("l_load_btn")) {
             if (loadFile(event, LEFT)) {
+
                 l_save_btn.setDisable(false);
                 l_edit_btn.setDisable(false);
             }
@@ -128,7 +130,7 @@ public class Controller {
         System.out.println("compare_file click!");
     }
 
-    private File fileChooser(ActionEvent event) {
+    private File fileChooser(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
         return fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
     }
@@ -215,6 +217,34 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+    private void setColor(int side){
+        if(side==LEFT) {
+            left_pannel.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+                @Override
+                public ListCell<String> call(ListView<String> list) {
+                    return new MyFormatCell();
+                }
+            });
+        }
+        else{
+                right_pannel.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+                @Override
+                public ListCell<String> call(ListView<String> list) {
+                    return new MyFormatCell();
+                }
+            });
+        }
+    }
+
+    public class MyFormatCell extends ListCell<String >{
+        @Override
+        protected void updateItem(String Item, boolean empty) {
+            super.updateItem(Item,empty);
+            setText(Item);
+            setTextFill(Color.RED);
+
         }
     }
 }
