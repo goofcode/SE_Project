@@ -7,10 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-import javafx.util.Callback;
-import model.Diff.DiffSequence;
+import model.Diff.DiffLine;
 import model.Diff.LCS;
-import model.Diff.Seq;
 import model.FileManager;
 
 import java.io.File;
@@ -21,15 +19,16 @@ import java.util.HashMap;
 public class Controller {
     private static final int LEFT = 0;
     private static final int RIGHT = 1;
-    @FXML
-    private ListView<String> left_pannel;
-    @FXML
-    private ListView<String> right_pannel;
 
-    @FXML
-    private TextArea left_textarea;
-    @FXML
-    private TextArea right_textarea;
+    @FXML private ListView<String> left_pannel;
+    @FXML private ListView<String> right_pannel;
+
+    @FXML private ListView<DiffLine> left_diff_panel;
+    @FXML private ListView<DiffLine> right_diff_panel;
+
+    @FXML private TextArea left_textarea;
+    @FXML private TextArea right_textarea;
+
     @FXML
     private Button l_load_btn, l_save_btn, l_edit_btn, r_load_btn, r_copy_btn, l_copy_btn, r_edit_btn, r_save_btn, comp_btn;
 
@@ -123,30 +122,37 @@ public class Controller {
 
     @FXML
     protected void compare_file(ActionEvent event) {
+
         System.out.println("compare_file click!");
-        //execute lcs algorithm
+
+        left_pannel.setVisible(false);
+        right_pannel.setVisible(false);
+        left_diff_panel.setVisible(true);
+        right_diff_panel.setVisible(true);
+
+        ArrayList<String> lText = fileManager[LEFT].getText();
+        ArrayList<String> rText = fileManager[RIGHT].getText();
+
+        // execute lcs algorithm
         LCS lcs = new LCS();
-        HashMap<String, ArrayList<ArrayList<Seq>>> result = lcs.getDismatch(fileManager[LEFT].getText(), fileManager[RIGHT].getText());
+        HashMap<String, ArrayList<DiffLine>> result = lcs.getDiff(lText, rText);
 
-        for (int i = 0; i < result.get("left").size(); i++) {
-            left_pannel.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-                @Override
-                public ListCell<String> call(ListView<String> list) {
-                    return new DiffSequence();
-                }
-            });
-        }
 
-        for (int i = 0; i < result.get("left").size(); i++) {
+        // create diff line observable list
+        ObservableList<DiffLine> lDiffLineObservableList = FXCollections.observableArrayList();
+        ObservableList<DiffLine> rDiffLineObservableList = FXCollections.observableArrayList();
 
-            right_pannel.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-                @Override
-                public ListCell<String> call(ListView<String> list) {
-                    return new DiffSequence();
-                }
-            });
+        for (int i=0; i< lText.size(); i++)
+            lDiffLineObservableList.add(result.get("left").get(i));
+        for (int i=0; i< rText.size(); i++)
+            rDiffLineObservableList.add(result.get("right").get(i));
 
-        }
+
+        // set list
+        left_diff_panel.setItems(lDiffLineObservableList);
+        right_diff_panel.setItems(rDiffLineObservableList);
+        left_diff_panel.setCellFactory(diffLineListView -> new DiffLineListViewCell());
+        right_diff_panel.setCellFactory(diffLineListView -> new DiffLineListViewCell());
     }
 
     private File fileChooser(ActionEvent event){

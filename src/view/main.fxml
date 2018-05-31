@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:controller="view.Controller" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="view.Controller" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <GridPane gridLinesVisible="true" prefHeight="500.0" prefWidth="640.0">
         <columnConstraints>
@@ -20,6 +20,7 @@
                   <StackPane >
                      <ListView fx:id="left_pannel" editable="false" visible="true" />
                      <TextArea fx:id="left_textarea" editable="false" visible="false"   />
+                     <ListView fx:id="left_diff_panel" editable="false" visible="false"/>
                   </StackPane>
 
 
@@ -43,6 +44,7 @@
                   <StackPane>
                      <ListView fx:id="right_pannel" editable="false" visible="true"/>
                      <TextArea fx:id="right_textarea" editable="false" visible="false"  />
+                     <ListView fx:id="right_diff_panel" editable="false" visible="false"/>
                   </StackPane>
 
                </center>

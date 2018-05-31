@@ -5,109 +5,103 @@ import java.util.HashMap;
 
 public class LCS {
 
-    private class Pos {
-        private int row, col;
-        Pos(int row, int col){this.row = row; this.col = col;}
-        public int getRow() {return this.row;}
-        public int getCol() {return this.col;}
-    }
-
-    public HashMap<String, ArrayList<Seq>> getMismatchSeqByLine(String lLine, String rLine) {
+    public HashMap<String, DiffLine> getDiffByLine(String lLine, String rLine) {
 
         // if both lines are empty, consider all matches
-        if (lLine.isEmpty() && rLine.isEmpty())
-        {
-            HashMap<String, ArrayList<Seq>> result = new HashMap<>();
-
-            ArrayList<Seq> lMatch = new ArrayList<>();
-            ArrayList<Seq> rMatch = new ArrayList<>();
-            lMatch.add(new Seq(0, lLine.length()));
-            rMatch.add(new Seq(0, rLine.length()));
-            result.put("left", lMatch);
-            result.put("right", rMatch);
-
+        if (lLine.isEmpty() && rLine.isEmpty()) {
+            HashMap<String, DiffLine> result = new HashMap<>();
+            result.put("left", new DiffLine(new ArrayList<>()));
+            result.put("right", new DiffLine(new ArrayList<>()));
             return result;
         }
 
 
-        int len1 = lLine.length();
-        int len2 = rLine.length();
-        int[][] check = new int[len1 + 1][len2 + 1];
+        int lLen = lLine.length();
+        int rLen = rLine.length();
+        int[][] lcs = new int[lLen + 1][rLen + 1];
 
-        ArrayList<Pos> posMatch = new ArrayList<>();
 
-        for (int i = 0; i < len1 + 1; i++)
-            for (int j = 0; j < len2 + 1; j++)
-                check[i][j] = 0;
+        for (int i = 0; i < lLen + 1; i++) lcs[i][0] = 0;
+        for (int j = 0; j < rLen + 1; j++) lcs[0][j] = 0;
 
-        for (int i = 1; i < len1 ; i++) {
-            for (int j = 1; j < len2 ; j++) {
+        for (int i = 1; i < lLen + 1; i++) {
+            for (int j = 1; j < rLen + 1; j++) {
 
                 // 현재 비교하는 값이 서로 같다면, lcs는 + 1
-                if (lLine.charAt(i) == rLine.charAt(j)) {
-                    check[i][j] = check[i - 1][j - 1] + 1;
-                    posMatch.add(new Pos(i-1,j-1));
-                }
+                if (lLine.charAt(i - 1) == rLine.charAt(j - 1))
+                    lcs[i][j] = lcs[i - 1][j - 1] + 1;
 
-                // 서로 다르다면 LCS의 값을 왼쪽 혹은 위에서 가져온다.
-                else check[i][j] = Math.max(check[i-1][j], check[i][j-1]);
+                    // 서로 다르다면 LCS의 값을 왼쪽 혹은 위에서 가져온다.
+                else lcs[i][j] = Math.max(lcs[i - 1][j], lcs[i][j - 1]);
             }
         }
 
-        // if there is no match at all
-        if (posMatch.size() == 0)
-        {
-            HashMap<String, ArrayList<Seq>> result = new HashMap<>();
+        // manipulate check
+        boolean[] lMatch = new boolean[lLen];
+        boolean[] rMatch = new boolean[rLen];
 
-            result.put("left", new ArrayList<>());
-            result.put("right", new ArrayList<>());
-
-            return result;
+        int i = lLen, j = rLen;
+        while (lcs[i][j] != 0) {
+            if (lcs[i][j] == lcs[i][j - 1]) j--;
+            else if (lcs[i][j] == lcs[i - 1][j]) i--;
+            else if (lcs[i][j] - 1 == lcs[i - 1][j - 1]) {
+                lMatch[i - 1] = rMatch[j - 1] = true;
+                i--;
+                j--;
+            }
         }
 
+        ArrayList<DiffBlock> lDiffBlocks = new ArrayList<>();
+        ArrayList<DiffBlock> rDiffBlocks = new ArrayList<>();
 
-        ArrayList<Seq> lNotMatch = new ArrayList<>();
-        ArrayList<Seq> rNotMatch = new ArrayList<>();
+        boolean isMatch;
+        int start;
 
-        int begin, end;
+        start = 0;
+        isMatch = lMatch[start];
+        for (i = 1; i < lLen; i++) {
+            if (isMatch != lMatch[i]){
+                lDiffBlocks.add(new DiffBlock(lLine.substring(start, i), isMatch));
 
-        // for line 1
-        begin = 0;
-        for(Pos pos: posMatch) {
-            end = pos.getCol();
-            if (begin < end)
-                lNotMatch.add(new Seq(begin, end));
+                start = i;
+                isMatch = !isMatch;
+            }
         }
+        lDiffBlocks.add(new DiffBlock(lLine.substring(start, lLen),isMatch));
 
-        // for line 2
-        begin =0;
-        for (Pos pos : posMatch) {
-            end = pos.getRow();
-            if (begin < end)
-                rNotMatch.add(new Seq(begin, end));
+        start = 0;
+        isMatch = rMatch[start];
+        for (i = 1; i < rLen; i++) {
+            if (isMatch != rMatch[i]){
+                rDiffBlocks.add(new DiffBlock(rLine.substring(start, i), isMatch));
+
+                start = i;
+                isMatch = !isMatch;
+            }
         }
+        rDiffBlocks.add(new DiffBlock(rLine.substring(start, rLen),isMatch));
 
-        HashMap<String, ArrayList<Seq>> result = new HashMap<>();
-        result.put("left", lNotMatch);
-        result.put("right", rNotMatch);
+        HashMap<String, DiffLine> result = new HashMap<>();
+        result.put("left", new DiffLine(lDiffBlocks));
+        result.put("right", new DiffLine(rDiffBlocks));
 
         return result;
     }
 
-    public HashMap<String, ArrayList<ArrayList<Seq>>> getDismatch(ArrayList<String> left, ArrayList<String> right) {
+    public HashMap<String, ArrayList<DiffLine>> getDiff(ArrayList<String> left, ArrayList<String> right) {
 
-        ArrayList<ArrayList<Seq>> lMismatch = new ArrayList<>();
-        ArrayList<ArrayList<Seq>> rMismatch = new ArrayList<>();
+        ArrayList<DiffLine> lMismatch = new ArrayList<>();
+        ArrayList<DiffLine> rMismatch = new ArrayList<>();
 
-        for(int i=0;i<Math.max(left.size(), right.size()); i++){
+        for (int i = 0; i < Math.max(left.size(), right.size()); i++) {
+            HashMap<String, DiffLine> lineMismatch = getDiffByLine(left.get(i), right.get(i));
 
-            HashMap<String, ArrayList<Seq>> lineMismatch = getMismatchSeqByLine(left.get(i), right.get(i));
             lMismatch.add(lineMismatch.get("left"));
             rMismatch.add(lineMismatch.get("right"));
         }
 
 
-        HashMap<String, ArrayList<ArrayList<Seq>>> result = new HashMap<>();
+        HashMap<String, ArrayList<DiffLine>> result = new HashMap<>();
 
         result.put("left", lMismatch);
         result.put("right", rMismatch);
