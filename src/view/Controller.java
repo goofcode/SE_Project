@@ -168,12 +168,15 @@ public class Controller {
     private void swapTextAreaToListView(int side) {
         TextArea area;
         ListView<String> panel;
+        ListView<DiffLine> diff_panel;
         if (side == LEFT) {
             area = left_textarea;
             panel = left_pannel;
+            diff_panel = left_diff_panel;
         } else {
             area = right_textarea;
             panel = right_pannel;
+            diff_panel = right_diff_panel;
         }
         ArrayList<String> k = new ArrayList<String>();
         for (CharSequence sequence : area.getParagraphs()) {
@@ -186,18 +189,22 @@ public class Controller {
         panel.setItems(list[side]);
         area.setEditable(false);
         area.setVisible(false);
+        diff_panel.setVisible(false);
         panel.setVisible(true);
     }
 
     private void swapListViewToTextArea(int side) {
         ListView<String> panel;
         TextArea area;
+        ListView<DiffLine> diff_panel;
         if (side == LEFT) {
-            panel = left_pannel;
             area = left_textarea;
+            panel = left_pannel;
+            diff_panel = left_diff_panel;
         } else {
-            panel = right_pannel;
             area = right_textarea;
+            panel = right_pannel;
+            diff_panel = right_diff_panel;
         }
 
         panel.setVisible(false);
@@ -212,6 +219,8 @@ public class Controller {
         area.setText(text.toString());
         area.setVisible(true);
         area.setEditable(true);
+        diff_panel.setVisible(false);
+
     }
 
     private Boolean loadFile(ActionEvent event, int side) {
