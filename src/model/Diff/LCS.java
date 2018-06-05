@@ -7,19 +7,38 @@ public class LCS {
 
     public HashMap<String, DiffLine> getDiffByLine(String lLine, String rLine) {
 
+        HashMap<String, DiffLine> result = new HashMap<>();
+        ArrayList<DiffBlock> lDiffBlocks = new ArrayList<>();
+        ArrayList<DiffBlock> rDiffBlocks = new ArrayList<>();
+
         // if both lines are empty, consider all matches
         if (lLine.isEmpty() && rLine.isEmpty()) {
-            HashMap<String, DiffLine> result = new HashMap<>();
+
             result.put("left", new DiffLine(new ArrayList<>()));
             result.put("right", new DiffLine(new ArrayList<>()));
             return result;
-        }
 
+        }else if(lLine.equals("") || lLine.isEmpty()){
+
+            rDiffBlocks.add(new DiffBlock(rLine, false));
+
+            result.put("left", new DiffLine(new ArrayList<>()));
+            result.put("right", new DiffLine(rDiffBlocks));
+            return result;
+
+        }else if(rLine.equals("") || rLine.isEmpty()){
+
+            lDiffBlocks.add(new DiffBlock(lLine, false));
+
+            result.put("left", new DiffLine(lDiffBlocks));
+            result.put("right", new DiffLine(new ArrayList<>()));
+            return result;
+
+        }
 
         int lLen = lLine.length();
         int rLen = rLine.length();
         int[][] lcs = new int[lLen + 1][rLen + 1];
-
 
         for (int i = 0; i < lLen + 1; i++) lcs[i][0] = 0;
         for (int j = 0; j < rLen + 1; j++) lcs[0][j] = 0;
@@ -51,9 +70,6 @@ public class LCS {
             }
         }
 
-        ArrayList<DiffBlock> lDiffBlocks = new ArrayList<>();
-        ArrayList<DiffBlock> rDiffBlocks = new ArrayList<>();
-
         boolean isMatch;
         int start;
 
@@ -81,7 +97,6 @@ public class LCS {
         }
         rDiffBlocks.add(new DiffBlock(rLine.substring(start, rLen),isMatch));
 
-        HashMap<String, DiffLine> result = new HashMap<>();
         result.put("left", new DiffLine(lDiffBlocks));
         result.put("right", new DiffLine(rDiffBlocks));
 
@@ -93,13 +108,23 @@ public class LCS {
         ArrayList<DiffLine> lMismatch = new ArrayList<>();
         ArrayList<DiffLine> rMismatch = new ArrayList<>();
 
+        if(left.size() < right.size()){
+            for (int i = 0; i < right.size() - left.size(); i++){
+                left.add("");
+            }
+        }else if (left.size() > right.size()){
+            for (int i = 0; i < left.size() - right.size(); i++){
+                right.add("");
+            }
+        }
+
+        System.out.println(left.size()+"     /     "+right.size());
         for (int i = 0; i < Math.max(left.size(), right.size()); i++) {
             HashMap<String, DiffLine> lineMismatch = getDiffByLine(left.get(i), right.get(i));
 
             lMismatch.add(lineMismatch.get("left"));
             rMismatch.add(lineMismatch.get("right"));
         }
-
 
         HashMap<String, ArrayList<DiffLine>> result = new HashMap<>();
 

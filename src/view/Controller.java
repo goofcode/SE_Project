@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class Controller {
     private static final int LEFT = 0;
@@ -129,6 +130,8 @@ public class Controller {
         right_pannel.setVisible(false);
         left_diff_panel.setVisible(true);
         right_diff_panel.setVisible(true);
+        l_copy_btn.setDisable(false);
+        r_copy_btn.setDisable(false);
 
         ArrayList<String> lText = fileManager[LEFT].getText();
         ArrayList<String> rText = fileManager[RIGHT].getText();
