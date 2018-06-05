@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Diff/LCS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Diff/LCS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Controller.java" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
@@ -61,47 +62,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/view/main.fxml">
-          <provider editor-type-id="JavaFX-Scene-Builder" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="50" column="31" selection-start-line="50" selection-start-column="31" selection-end-line="50" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FileManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/FileManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-8">
-              <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/view/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="124" column="50" lean-forward="true" selection-start-line="124" selection-start-column="50" selection-end-line="124" selection-end-column="50" />
+            <state relative-caret-position="-551">
+              <caret line="140" column="66" selection-start-line="140" selection-start-column="66" selection-end-line="140" selection-end-column="66" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3686#3687#0" expanded="true" />
-                <element signature="e#3743#3744#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DiffLine.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/Diff/DiffLine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DiffBlock.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/Diff/DiffBlock.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="10" column="31" lean-forward="true" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -109,8 +95,17 @@
       <file leaf-file-name="LCS.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/Diff/LCS.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-8">
-              <caret line="107" selection-start-line="107" selection-end-line="107" />
+            <state relative-caret-position="228">
+              <caret line="46" column="44" selection-start-line="46" selection-start-column="44" selection-end-line="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="361">
+              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -118,20 +113,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <file leaf-file-name="DiffLineListViewCell.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/view/DiffLineListViewCell.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="49">
-              <caret line="137" column="44" selection-start-line="137" selection-start-column="44" selection-end-line="137" selection-end-column="44" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Seq.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/Diff/Seq.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-8">
-              <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+            <state relative-caret-position="285">
+              <caret line="31" column="9" lean-forward="true" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -148,6 +134,9 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>lcs</find>
+      <find>LIST</find>
+      <find>list</find>
+      <find>for \(DiffBlock block\: blockcolor\)\{\n                if\(\!block\.getMatch\(\)\)\n                    sbColors\.append\(\&quot;hsb\(\&quot;\)\.append\(\(\(\(double\)cont\.get\(\)\)\/\(\(double\)flowPane\.getChildren\(\)\.size\(\)\)\)\*180d\)\.append\(\&quot;\, 60\%\, 90\%\)\&quot;\)\;\n            \}\n\n            if\(cont\.getAndIncrement\(\)\&lt;flowPane\.getChildren\(\)\.size\(\)\-1\)\{\n                sbColors\.append\(\&quot;\, \&quot;\)\;\n                sbInsets\.append\(\&quot;\, \&quot;\)\;\n            \}</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -163,10 +152,14 @@
       <list>
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/view/main.fxml" />
-        <option value="$PROJECT_DIR$/src/model/Diff/LCS.java" />
         <option value="$PROJECT_DIR$/src/model/Diff/Seq.java" />
         <option value="$PROJECT_DIR$/src/model/Diff/FileText.java" />
+        <option value="$PROJECT_DIR$/src/model/Diff/FormatCell.java" />
+        <option value="$PROJECT_DIR$/src/model/Diff/DiffSequence.java" />
+        <option value="$PROJECT_DIR$/src/view/viewCss.css" />
         <option value="$PROJECT_DIR$/src/view/Controller.java" />
+        <option value="$PROJECT_DIR$/src/view/DiffLineListViewCell.java" />
+        <option value="$PROJECT_DIR$/src/model/Diff/LCS.java" />
       </list>
     </option>
   </component>
@@ -181,9 +174,9 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="953" />
+    <option name="x" value="2873" />
     <option name="width" value="974" />
-    <option name="height" value="1047" />
+    <option name="height" value="527" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectReloadState">
@@ -195,6 +188,8 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -220,12 +215,16 @@
               <item name="model" type="462c0819:PsiDirectoryNode" />
               <item name="Diff" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="SE_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SE_project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -239,6 +238,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="last_opened_file_path" value="C:/Projects" />
     <property name="recentsLimit" value="5" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
@@ -351,32 +351,35 @@
       <workItem from="1526963964541" duration="12000" />
       <workItem from="1527085931984" duration="220000" />
       <workItem from="1527601190197" duration="3830000" />
-      <workItem from="1527663804700" duration="4503000" />
+      <workItem from="1527663804700" duration="19702000" />
+      <workItem from="1527774121035" duration="22296000" />
+      <workItem from="1528085329011" duration="2796000" />
+      <workItem from="1528099483458" duration="15109000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10084000" />
+    <option name="totallyTimeSpent" value="65484000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="15" />
+      <window_info anchor="bottom" id="Messages" order="15" weight="0.32972974" />
       <window_info anchor="right" id="Palette&#9;" order="9" />
       <window_info id="Image Layers" order="6" />
       <window_info anchor="right" id="Capture Analysis" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" weight="0.329602" />
       <window_info anchor="right" id="Maven Projects" order="4" />
       <window_info anchor="bottom" id="Database Changes" order="13" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="12" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.22340426" />
+      <window_info anchor="bottom" id="Version Control" order="12" weight="0.1891892" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.22918919" />
       <window_info anchor="bottom" id="Terminal" order="14" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.18177083" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.18177083" />
       <window_info anchor="right" id="Database" order="5" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -412,43 +415,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/model/Diff/LCS.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/main.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="39" column="29" selection-start-line="39" selection-start-column="29" selection-end-line="39" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/FileManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3686#3687#0" expanded="true" />
-            <element signature="e#3743#3744#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -465,38 +431,6 @@
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3686#3687#0" expanded="true" />
-            <element signature="e#3743#3744#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/main.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="44" column="28" lean-forward="true" selection-start-line="44" selection-start-column="28" selection-end-line="44" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3686#3687#0" expanded="true" />
-            <element signature="e#3743#3744#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -525,8 +459,6 @@
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3686#3687#0" expanded="true" />
-            <element signature="e#3743#3744#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -563,8 +495,6 @@
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3686#3687#0" expanded="true" />
-            <element signature="e#3743#3744#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -585,8 +515,6 @@
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3686#3687#0" expanded="true" />
-            <element signature="e#3743#3744#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -615,8 +543,6 @@
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3686#3687#0" expanded="true" />
-            <element signature="e#3743#3744#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -643,8 +569,6 @@
         <state>
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3686#3687#0" expanded="true" />
-            <element signature="e#3743#3744#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -673,8 +597,6 @@
           <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3686#3687#0" expanded="true" />
-            <element signature="e#3743#3744#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -712,8 +634,6 @@
         <state>
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3686#3687#0" expanded="true" />
-            <element signature="e#3743#3744#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -745,73 +665,327 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Controller.java" />
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/model/Diff/FileText.java" />
+    <entry file="file://$PROJECT_DIR$/src/model/Diff/Seq.java" />
+    <entry file="file://$PROJECT_DIR$/src/model/Diff/DiffSequence.java" />
+    <entry file="file://$PROJECT_DIR$/src/model/FileManager.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-483">
+          <caret line="348" column="44" selection-start-line="348" selection-start-column="44" selection-end-line="348" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/model.Diff.DiffSequence">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
-          <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <ID>JAVA</ID>
+          <OriginalElement>model.Diff.DiffSequence</OriginalElement>
+          <nodes>
+            <node x="1817.0" y="190.0">javafx.scene.Node.AccessibilityProperties</node>
+            <node x="339.25" y="270.0">javafx.scene.control.Skinnable</node>
+            <node x="187.0" y="670.0">javafx.scene.control.ListCell</node>
+            <node x="367.25" y="350.0">javafx.scene.control.Control</node>
+            <node x="175.0" y="590.0">javafx.scene.control.IndexedCell</node>
+            <node x="196.0" y="510.0">javafx.scene.control.Cell</node>
+            <node x="1715.0" y="190.0">javafx.scene.Parent</node>
+            <node x="1693.0" y="350.0">javafx.scene.layout.Region.ShapeProperty</node>
+            <node x="767.0" y="190.0">javafx.scene.Node.StyleableProperties</node>
+            <node x="446.0" y="825.0">model.Diff.DiffLine</node>
+            <node x="1194.0" y="190.0">javafx.scene.Node.EffectiveOrientationProperty</node>
+            <node x="1334.475806451613" y="350.0">javafx.scene.layout.Region.StyleableProperties</node>
+            <node x="576.0" y="190.0">javafx.scene.Node.LazyTransformProperty</node>
+            <node x="153.0" y="750.0">view.DiffLineListViewCell</node>
+            <node x="249.75" y="430.0">javafx.scene.control.Labeled</node>
+            <node x="358.75" y="430.0">javafx.scene.control.Control.StyleableProperties</node>
+            <node x="1839.0" y="350.0">javafx.scene.layout.Region.InsetsProperty</node>
+            <node x="1982.0" y="350.0">javafx.scene.layout.Region.MinPrefMaxProperty</node>
+            <node x="284.0" y="510.0">javafx.scene.control.Labeled.StyleableProperties</node>
+            <node x="398.00000000000006" y="190.0">javafx.scene.Node.NodeTransformation</node>
+            <node x="1016.5" y="80.0">javafx.scene.Node</node>
+            <node x="459.25000000000006" y="270.0">javafx.scene.Node.NodeTransformation.LocalToSceneTransformProperty</node>
+            <node x="1558.0" y="190.0">javafx.scene.Node.FocusedProperty</node>
+            <node x="997.75" y="0.0">javafx.event.EventTarget</node>
+            <node x="304.0" y="825.0">model.Diff.DiffBlock</node>
+            <node x="158.0" y="825.0">view.Controller</node>
+            <node x="936.0" y="190.0">javafx.scene.Node.ReadOnlyObjectWrapperManualFire</node>
+            <node x="1713.5" y="270.0">javafx.scene.layout.Region</node>
+            <node x="0.0" y="190.0">javafx.scene.Node.LazyBoundsProperty</node>
+            <node x="0.0" y="825.0">model.FileManager</node>
+            <node x="206.0" y="350.0">javafx.beans.DefaultProperty</node>
+            <node x="177.0" y="190.0">javafx.scene.Node.TreeVisiblePropertyReadOnly</node>
+            <node x="1412.0" y="190.0">javafx.scene.Node.MiscProperties</node>
+            <node x="581.0" y="825.0">model.Diff.LCS</node>
+            <node x="1127.75" y="0.0">com.sun.javafx.beans.IDProperty</node>
+            <node x="881.75" y="0.0">javafx.css.Styleable</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="javafx.scene.control.Labeled.StyleableProperties" target="javafx.scene.control.Labeled">
+              <point x="0.0" y="-15.0" />
+              <point x="358.5" y="485.0" />
+              <point x="316.5" y="485.0" />
+              <point x="22.25" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node" target="javafx.css.Styleable">
+              <point x="-25.666666666666742" y="-15.0" />
+              <point x="1029.3333333333333" y="55.0" />
+              <point x="929.75" y="55.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node.NodeTransformation.LocalToSceneTransformProperty" target="javafx.scene.Node.LazyTransformProperty">
+              <point x="55.0" y="-15.0" />
+              <point x="624.25" y="245.0" />
+              <point x="661.5" y="245.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node" target="com.sun.javafx.beans.IDProperty">
+              <point x="25.666666666666742" y="-15.0" />
+              <point x="1080.6666666666667" y="55.0" />
+              <point x="1180.25" y="55.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.layout.Region.MinPrefMaxProperty" target="javafx.scene.layout.Region">
+              <point x="0.0" y="-15.0" />
+              <point x="2061.0" y="320.0" />
+              <point x="1790.0" y="320.0" />
+              <point x="34.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node.MiscProperties" target="javafx.scene.Node">
+              <point x="0.0" y="-15.0" />
+              <point x="1475.0" y="160.0" />
+              <point x="1069.0" y="160.0" />
+              <point x="14.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node.ReadOnlyObjectWrapperManualFire" target="javafx.scene.Node">
+              <point x="0.0" y="-15.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Parent" target="javafx.scene.Node">
+              <point x="0.0" y="-15.0" />
+              <point x="1756.0" y="140.0" />
+              <point x="1083.0" y="140.0" />
+              <point x="28.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.control.Control" target="javafx.scene.layout.Region">
+              <point x="22.0" y="-15.0" />
+              <point x="433.25" y="320.0" />
+              <point x="1722.0" y="320.0" />
+              <point x="-34.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.control.IndexedCell" target="javafx.scene.control.Cell">
+              <point x="0.0" y="-15.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node.LazyBoundsProperty" target="javafx.scene.Node">
+              <point x="0.0" y="-15.0" />
+              <point x="78.5" y="130.0" />
+              <point x="1020.0" y="130.0" />
+              <point x="-35.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node.EffectiveOrientationProperty" target="javafx.scene.Node">
+              <point x="0.0" y="-15.0" />
+              <point x="1293.0" y="170.0" />
+              <point x="1062.0" y="170.0" />
+              <point x="7.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node.StyleableProperties" target="javafx.scene.Node">
+              <point x="0.0" y="-15.0" />
+              <point x="841.5" y="170.0" />
+              <point x="1048.0" y="170.0" />
+              <point x="-7.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node" target="javafx.event.EventTarget">
+              <point x="0.0" y="-15.0" />
+              <point x="1055.0" y="55.0" />
+              <point x="1052.75" y="55.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node.FocusedProperty" target="javafx.scene.Node">
+              <point x="0.0" y="-15.0" />
+              <point x="1626.5" y="150.0" />
+              <point x="1076.0" y="150.0" />
+              <point x="21.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.layout.Region.StyleableProperties" target="javafx.scene.layout.Region">
+              <point x="0.0" y="-15.0" />
+              <point x="1408.975806451613" y="330.0" />
+              <point x="1739.0" y="330.0" />
+              <point x="-17.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node.NodeTransformation.LocalToSceneTransformProperty" target="javafx.scene.Node.NodeTransformation">
+              <point x="-55.0" y="-15.0" />
+              <point x="514.25" y="245.0" />
+              <point x="477.00000000000006" y="245.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.control.Control.StyleableProperties" target="javafx.scene.control.Control">
+              <point x="0.0" y="-15.0" />
+              <point x="22.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.control.Control" target="javafx.scene.control.Skinnable">
+              <point x="-22.0" y="-15.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node.LazyTransformProperty" target="javafx.scene.Node">
+              <point x="0.0" y="-15.0" />
+              <point x="661.5" y="160.0" />
+              <point x="1041.0" y="160.0" />
+              <point x="-14.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.layout.Region.InsetsProperty" target="javafx.scene.layout.Region">
+              <point x="0.0" y="-15.0" />
+              <point x="1900.5" y="330.0" />
+              <point x="1773.0" y="330.0" />
+              <point x="17.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.control.Labeled" target="javafx.scene.control.Control">
+              <point x="22.25" y="-15.0" />
+              <point x="316.5" y="405.0" />
+              <point x="389.25" y="405.0" />
+              <point x="-22.0" y="15.0" />
+            </edge>
+            <edge source="view.DiffLineListViewCell" target="javafx.scene.control.ListCell">
+              <point x="0.0" y="-15.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node.TreeVisiblePropertyReadOnly" target="javafx.scene.Node">
+              <point x="0.0" y="-15.0" />
+              <point x="277.5" y="140.0" />
+              <point x="1027.0" y="140.0" />
+              <point x="-28.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.control.Cell" target="javafx.scene.control.Labeled">
+              <point x="0.0" y="-15.0" />
+              <point x="230.0" y="485.0" />
+              <point x="272.0" y="485.0" />
+              <point x="-22.25" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node.AccessibilityProperties" target="javafx.scene.Node">
+              <point x="0.0" y="-15.0" />
+              <point x="1900.0" y="130.0" />
+              <point x="1090.0" y="130.0" />
+              <point x="35.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.control.Labeled" target="javafx.beans.DefaultProperty">
+              <point x="-22.25" y="-15.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.layout.Region" target="javafx.scene.Parent">
+              <point x="0.0" y="-15.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.Node.NodeTransformation" target="javafx.scene.Node">
+              <point x="0.0" y="-15.0" />
+              <point x="477.00000000000006" y="150.0" />
+              <point x="1034.0" y="150.0" />
+              <point x="-21.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.control.ListCell" target="javafx.scene.control.IndexedCell">
+              <point x="0.0" y="-15.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+            <edge source="javafx.scene.layout.Region.ShapeProperty" target="javafx.scene.layout.Region">
+              <point x="0.0" y="-15.0" />
+              <point x="0.0" y="15.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="0.7000000000000001" x="176.0" y="309.0" />
+          <SelectedNodes>
+            <node>model.FileManager</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/view.Controller">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>view.Controller</OriginalElement>
+          <nodes>
+            <node x="" y="">model.FileManager</node>
+            <node x="" y="">model.Diff.DiffLine</node>
+            <node x="" y="">model.Diff.DiffBlock</node>
+            <node x="" y="">model.Diff.LCS</node>
+            <node x="" y="">view.DiffLineListViewCell</node>
+            <node x="" y="">view.Controller</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="51.0" y="339.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Methods</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/main.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="50" column="31" selection-start-line="50" selection-start-column="31" selection-end-line="50" selection-end-column="31" />
+        <state relative-caret-position="418">
+          <caret line="22" column="59" selection-start-line="22" selection-start-column="59" selection-end-line="22" selection-end-column="59" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Diff/Seq.java">
+    <entry file="file://$PROJECT_DIR$/src/view/viewCss.css" />
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+        <state relative-caret-position="361">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/Diff/DiffLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/Diff/DiffBlock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="31" lean-forward="true" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/Diff/LCS.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="107" selection-start-line="107" selection-end-line="107" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="228">
+          <caret line="46" column="44" selection-start-line="46" selection-start-column="44" selection-end-line="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/FileManager.java">
+    <entry file="file://$PROJECT_DIR$/src/view/DiffLineListViewCell.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Diff/FileText.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="49">
-          <caret line="137" column="44" selection-start-line="137" selection-start-column="44" selection-end-line="137" selection-end-column="44" />
+        <state relative-caret-position="285">
+          <caret line="31" column="9" lean-forward="true" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="124" column="50" lean-forward="true" selection-start-line="124" selection-start-column="50" selection-end-line="124" selection-end-column="50" />
+        <state relative-caret-position="-551">
+          <caret line="140" column="66" selection-start-line="140" selection-start-column="66" selection-end-line="140" selection-end-column="66" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3686#3687#0" expanded="true" />
-            <element signature="e#3743#3744#0" expanded="true" />
           </folding>
         </state>
       </provider>
