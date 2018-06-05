@@ -6,7 +6,8 @@ import java.util.HashMap;
 public class LCS {
 
     public HashMap<String, DiffLine> getDiffByLine(String lLine, String rLine) {
-
+        boolean islinematch=true;
+        boolean flag = true;
         // if both lines are empty, consider all matches
         if (lLine.isEmpty() && rLine.isEmpty()) {
             HashMap<String, DiffLine> result = new HashMap<>();
@@ -62,9 +63,11 @@ public class LCS {
         for (i = 1; i < lLen; i++) {
             if (isMatch != lMatch[i]){
                 lDiffBlocks.add(new DiffBlock(lLine.substring(start, i), isMatch));
+                flag=false;
 
                 start = i;
                 isMatch = !isMatch;
+
             }
         }
         lDiffBlocks.add(new DiffBlock(lLine.substring(start, lLen),isMatch));
@@ -77,13 +80,14 @@ public class LCS {
 
                 start = i;
                 isMatch = !isMatch;
+                flag=false;
             }
         }
         rDiffBlocks.add(new DiffBlock(rLine.substring(start, rLen),isMatch));
 
         HashMap<String, DiffLine> result = new HashMap<>();
-        result.put("left", new DiffLine(lDiffBlocks));
-        result.put("right", new DiffLine(rDiffBlocks));
+        result.put("left", new DiffLine(lDiffBlocks,flag));
+        result.put("right", new DiffLine(rDiffBlocks,flag));
 
         return result;
     }

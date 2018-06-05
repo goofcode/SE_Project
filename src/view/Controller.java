@@ -7,14 +7,17 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import model.Diff.DiffBlock;
 import model.Diff.DiffLine;
 import model.Diff.LCS;
 import model.FileManager;
 
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class Controller {
     private static final int LEFT = 0;
@@ -36,6 +39,9 @@ public class Controller {
     private FileManager[] fileManager = new FileManager[2];
     private boolean loadFlag[] = new boolean[2];
     private boolean editFlag[] = new boolean[2];
+    private int block_up_index[] = new int[2];
+    private int block_down_index[] = new int[2];
+    private Boolean compareFlag = false;
 
     private Alert alert;
     public Controller() {
@@ -74,6 +80,7 @@ public class Controller {
             if (editFlag[LEFT]) {
                 System.out.println("left_edit_file toggle on!");
                 editFlag[LEFT] = false;
+                compareFlag = false;
                 swapListViewToTextArea(LEFT);
             } else {
                 System.out.println("left_edit_file toggle off!");
@@ -84,6 +91,7 @@ public class Controller {
             if (editFlag[RIGHT]) {
                 System.out.println("right_edit_file toggle on!");
                 editFlag[RIGHT] = false;
+                compareFlag = false;
                 swapListViewToTextArea(RIGHT);
             } else {
                 System.out.println("right_edit_file toggle off!");
@@ -91,6 +99,11 @@ public class Controller {
                 swapTextAreaToListView(RIGHT);
             }
         }
+        if(!compareFlag){
+            l_copy_btn.setDisable(true);
+            r_copy_btn.setDisable(true);
+        }
+
     }
 
     @FXML
@@ -106,13 +119,87 @@ public class Controller {
                 System.out.println("save done!");
         }
     }
+    @FXML
+    protected void selected_item(javafx.scene.input.MouseEvent event) {
+        int clickedLine = -1;
+        if(!compareFlag)
+            return;
+        clickedLine = left_diff_panel.getSelectionModel().getSelectedIndex();
+        if(clickedLine==-1){
+        }
+        else {
+            search_diff_lines(clickedLine,LEFT);
+            search_diff_lines(clickedLine,RIGHT);
+            // use diff line index to change back ground
+        }
 
+
+
+    }
 
     @FXML
     protected void copy_file(ActionEvent event) {
         String btn_name = ((Node) event.getSource()).getId();
+        int clickLine = -1;
+
+        alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Confirm Copy");
+
         if (btn_name.equals("l_copy_btn")) {
             System.out.println("left_copy click!");
+            System.out.println(left_diff_panel.getSelectionModel().getSelectedIndex());
+
+            clickLine =block_up_index[LEFT];
+
+            if(compareFlag){
+                if (left_diff_panel.getItems().get(clickLine).getIsMatch()) {
+                    alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setHeaderText("Not different line");
+                    alert.setContentText("똑같은데?");
+                    alert.showAndWait();
+
+                } else {
+                    alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setHeaderText("Would you like to copy and paste?");
+                    alert.setContentText("합치쉴?");
+
+                    Optional<ButtonType> option = alert.showAndWait();
+                    if (option.get() == ButtonType.OK) {
+                        for(int i=block_up_index[RIGHT];i<=block_down_index[RIGHT];i++){
+                            right_diff_panel.getItems().remove(block_up_index[RIGHT]);
+                        }
+
+                        for(int i=block_down_index[LEFT];i>=block_up_index[LEFT];i--){
+                            right_diff_panel.getItems().add(block_up_index[RIGHT],left_diff_panel.getItems().get(i));
+                        }
+                        for(int i = block_up_index[LEFT]; i<=block_down_index[LEFT];i++){
+                            for(int j=0;j<right_diff_panel.getItems().get(i).getLine().size();j++){
+                                StringBuilder temp = new StringBuilder();
+                                for(DiffBlock a : right_diff_panel.getItems().get(i).getLine()){
+                                    temp.append(a.getContent());
+                                }
+                                right_pannel.getItems().set(i, temp.toString());
+                            }
+                        }
+                        ArrayList<String> tmp = new ArrayList<String>(right_pannel.getItems());
+                        fileManager[RIGHT].setText(tmp);
+                        right_pannel.setVisible(true);
+                        right_diff_panel.setVisible(false);
+                        left_pannel.setVisible(true);
+                        left_diff_panel.setVisible(false);
+                        System.out.println("ok!");
+                    } else {
+                        System.out.println("cancel");
+                    }
+                }
+
+            }
+            else {
+                alert.setHeaderText("Click compare first");
+                alert.setContentText("컴페어 먼저 하시죠?");
+                alert.showAndWait();
+            }
+
         } else {
             System.out.println("right_copy click!");
         }
@@ -124,6 +211,10 @@ public class Controller {
     protected void compare_file(ActionEvent event) {
 
         System.out.println("compare_file click!");
+
+        for(int i=0;i<2;i++){
+            block_down_index[i]=block_up_index[i]=-1;
+        }
 
         left_pannel.setVisible(false);
         right_pannel.setVisible(false);
@@ -153,6 +244,9 @@ public class Controller {
         right_diff_panel.setItems(rDiffLineObservableList);
         left_diff_panel.setCellFactory(diffLineListView -> new DiffLineListViewCell());
         right_diff_panel.setCellFactory(diffLineListView -> new DiffLineListViewCell());
+        compareFlag = true;
+        l_copy_btn.setDisable(false);
+        r_copy_btn.setDisable(false);
     }
 
     private File fileChooser(ActionEvent event){
@@ -253,5 +347,37 @@ public class Controller {
             return false;
         }
     }
+
+    private void search_diff_lines(int clickedLine,int side){
+        ListView<DiffLine> diff_panel;
+        if(side==LEFT){
+            diff_panel=left_diff_panel;
+        }
+        else{
+            diff_panel=right_diff_panel;
+        }
+        block_down_index[side]=block_up_index[side]=clickedLine;
+        if(diff_panel.getItems().get(clickedLine).getIsMatch())
+            return;
+        else{
+            if(clickedLine>0){
+                for(int i = clickedLine; i>=0;i--){
+                    if(diff_panel.getItems().get(i).getIsMatch())
+                        break;
+                    block_up_index[side]=i;
+                }
+            }
+            if(clickedLine<diff_panel.getItems().size()){
+                for(int i = clickedLine; i < diff_panel.getItems().size();i++){
+                    if(diff_panel.getItems().get(i).getIsMatch())
+                        break;
+                    block_down_index[side]=i;
+
+                }
+            }
+
+        }
+    }
+
 
 }
