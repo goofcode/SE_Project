@@ -20,7 +20,7 @@
                   <StackPane >
                      <ListView fx:id="left_pannel" editable="false" visible="true" />
                      <TextArea fx:id="left_textarea" editable="false" visible="false"   />
-                     <ListView fx:id="left_diff_panel" editable="false" visible="false"/>
+                     <ListView fx:id="left_diff_panel" editable="false" onMouseClicked="#selected_item" visible="false"/>
                   </StackPane>
 
 
@@ -44,7 +44,7 @@
                   <StackPane>
                      <ListView fx:id="right_pannel" editable="false" visible="true"/>
                      <TextArea fx:id="right_textarea" editable="false" visible="false"  />
-                     <ListView fx:id="right_diff_panel" editable="false" visible="false"/>
+                     <ListView fx:id="right_diff_panel" editable="false" onMouseClicked="#selected_item" visible="false"/>
                   </StackPane>
 
                </center>

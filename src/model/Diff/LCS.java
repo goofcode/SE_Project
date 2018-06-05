@@ -10,6 +10,7 @@ public class LCS {
         HashMap<String, DiffLine> result = new HashMap<>();
         ArrayList<DiffBlock> lDiffBlocks = new ArrayList<>();
         ArrayList<DiffBlock> rDiffBlocks = new ArrayList<>();
+        boolean islinematch=true;
 
         // if both lines are empty, consider all matches
         if (lLine.isEmpty() && rLine.isEmpty()) {
@@ -78,9 +79,11 @@ public class LCS {
         for (i = 1; i < lLen; i++) {
             if (isMatch != lMatch[i]){
                 lDiffBlocks.add(new DiffBlock(lLine.substring(start, i), isMatch));
+                islinematch=false;
 
                 start = i;
                 isMatch = !isMatch;
+
             }
         }
         lDiffBlocks.add(new DiffBlock(lLine.substring(start, lLen),isMatch));
@@ -93,12 +96,14 @@ public class LCS {
 
                 start = i;
                 isMatch = !isMatch;
+                islinematch=false;
             }
         }
         rDiffBlocks.add(new DiffBlock(rLine.substring(start, rLen),isMatch));
 
-        result.put("left", new DiffLine(lDiffBlocks));
-        result.put("right", new DiffLine(rDiffBlocks));
+        HashMap<String, DiffLine> result = new HashMap<>();
+        result.put("left", new DiffLine(lDiffBlocks,islinematch));
+        result.put("right", new DiffLine(rDiffBlocks,islinematch));
 
         return result;
     }
