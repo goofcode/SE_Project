@@ -2,7 +2,6 @@ package view;
 
 import com.sun.istack.internal.Nullable;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -88,16 +87,8 @@ public class Controller implements Initializable {
 
         fileManagers[side] = new FileManager(file);
 
-        if (fileManagers[other] != null) {
-
-            int size = fileManagers[side].getSize();
-            int otherSize = fileManagers[other].getSize();
-
-            if (size < otherSize)
-                fileManagers[side].padFile(otherSize - size);
-            else if (size > otherSize)
-                fileManagers[other].padFile(size - otherSize);
-        }
+        if (fileManagers[other] != null)
+            fileManagers[side].synchronizeSize(fileManagers[other]);
 
         isLoaded[side] = true;
         isEditToggled[side] = false;
@@ -111,6 +102,7 @@ public class Controller implements Initializable {
     public void onEditBtnClicked(ActionEvent e) {
 
         int side = e.getSource() == editBtn.get(LEFT) ? LEFT : RIGHT;
+        int other = side == LEFT? RIGHT: LEFT;
 
         // if not toggled
         if (!isEditToggled[side])
@@ -120,6 +112,8 @@ public class Controller implements Initializable {
         else {
             isEditToggled[side] = false;
             fileManagers[side].setLinesFromOneString(editTextArea.get(side).getText());
+            if (fileManagers[other] != null)
+                fileManagers[side].synchronizeSize(fileManagers[other]);
         }
 
         isCompared = false;
@@ -207,6 +201,14 @@ public class Controller implements Initializable {
             showDiffListView(LEFT);
             showDiffListView(RIGHT);
 
+            // scroll bar binding
+            Node leftScrollBar = diffListView.get(LEFT).lookup(".scroll-bar");
+            Node rightScrollBar = diffListView.get(RIGHT).lookup(".scroll-bar");
+            if (leftScrollBar instanceof ScrollBar && rightScrollBar instanceof ScrollBar){
+                ((ScrollBar) leftScrollBar).valueProperty()
+                        .bindBidirectional(((ScrollBar) rightScrollBar).valueProperty());
+            }
+
             diffListView.get(LEFT).refresh();
             diffListView.get(RIGHT).refresh();
 
@@ -220,6 +222,14 @@ public class Controller implements Initializable {
             lineListView.get(side).setItems(FXCollections.observableArrayList(fileManagers[side].getLines()));
 
             showLineListView(side);
+
+            Node leftScrollBar = lineListView.get(LEFT).lookup(".scroll-bar");
+            Node rightScrollBar = lineListView.get(RIGHT).lookup(".scroll-bar");
+            if (leftScrollBar instanceof ScrollBar && rightScrollBar instanceof ScrollBar){
+                ((ScrollBar) leftScrollBar).valueProperty()
+                        .bindBidirectional(((ScrollBar) rightScrollBar).valueProperty());
+            }
+
             activateBtn(side, true, true, false, false);
 
             lineListView.get(side).refresh();
