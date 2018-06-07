@@ -23,8 +23,8 @@ public class FileManagerTest {
     @Before
     public void createFile() throws URISyntaxException {
 
-        fileManagerA = new FileManager(new File ("test_a.txt"));
-        fileManagerB = new FileManager(new File ("test_b.txt"));
+        fileManagerA = new FileManager(new File ("src/test/inputs/test_a.txt"));
+        fileManagerB = new FileManager(new File ("src/test/inputs/test_b.txt"));
     }
 
     @Test

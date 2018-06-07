@@ -12,6 +12,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
+import static org.junit.Assert.assertTrue;
+
 public class ControllerTest extends GuiTest {
     private static final SettableFuture<Stage> stageFuture = SettableFuture.create();
     public Button btn;
@@ -55,7 +57,8 @@ public class ControllerTest extends GuiTest {
 
     @Test
     public void onLoadBtnClicked() {
-        btn = find("#lLoadBtn");
+        System.out.println("LoadButton test");
+        assertTrue(GuiTest.find("#lLoadBtn").isDisabled());
 
     }
 
