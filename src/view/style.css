@@ -1,0 +1,34 @@
+
+.list-cell:match {
+    -fx-background-color: blue;
+}
+
+.list-cell:match-selected {
+    -fx-background-color: green;
+}
+
+.list-cell:mismatch {
+    -fx-background-color: red;
+}
+
+.list-cell:mismatch-selected {
+    -fx-background-color: yellow;
+}
+
+
+.text:text-match{
+    -fx-set-fill: black;
+}
+
+.text:text-match-selected{
+    -fx-set-fill: white;
+}
+
+.text:text-mismatch{
+    -fx-set-fill: yellow;
+}
+
+.text:text-mismatch-selected{
+    -fx-set-fill: white;
+}
+
