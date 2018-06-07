@@ -100,11 +100,4 @@ public class FileManager {
         }
     }
 
-    public void clearText(){
-        this.file = null;
-        lines.clear();
-    }
-
-
-
 }
