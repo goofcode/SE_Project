@@ -32,7 +32,20 @@ public class FileManager {
 
     }
 
-    public void padFile(int padding) {
+    public void synchronizeSize(FileManager fileManager){
+
+        for (int i=size; i<lines.size(); i++)
+            lines.remove(i);
+        for (int i=fileManager.getSize(); i<fileManager.getLines().size(); i++)
+            fileManager.getLines().remove(i);
+
+        if(this.size < fileManager.getSize())
+            this.padLines(fileManager.getSize() - this.size);
+        else if (this.size > fileManager.getSize())
+            fileManager.padLines(this.size - fileManager.getSize());
+    }
+
+    private void padLines(int padding) {
         for (int i=0; i<padding; i++) lines.add("");
     }
 
@@ -64,7 +77,8 @@ public class FileManager {
         if(index > size-1) size = index+1;
     }
     public void setLinesFromOneString(String linesString){
-        setLines(Arrays.asList(linesString.split("\\n")));
+        setLines(Arrays.asList(linesString.split("\n", -1)));
+        size = lines.size();
     }
 
     public void save() {
