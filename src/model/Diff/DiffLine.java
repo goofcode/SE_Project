@@ -1,35 +1,54 @@
 package model.Diff;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DiffLine {
 
-    private ArrayList<DiffBlock> line;
-    private Boolean isMatch;
-    //불리언 하나 추가해서 하나라도 다르면 다른 라인임을 표시한다 포커스 되었을시 위아래로 서치, 전체 색바꿈
+    private List<DiffBlock> line;
+    private Boolean isMatched;
+    private Boolean isSelected;
 
-    public DiffLine(ArrayList<DiffBlock> line) {
-        this.line = line;
-        isMatch = true;
-        for(DiffBlock b : this.line){
-            if(!b.getMatch())
-                isMatch = false;
-        }
-    }
-    public DiffLine(ArrayList<DiffBlock> line,boolean isMatch) {
-        this.line = line;
-        this.isMatch=isMatch;
+    public DiffLine(List<DiffBlock> line, boolean isMatched) {
+        this.line = new ArrayList<>(line);
+        this.isMatched = isMatched;
+        this.isSelected = false;
     }
 
-    public ArrayList<DiffBlock> getLine() {
+    public void copyTo(DiffLine dst){
+
+        StringBuilder sb = new StringBuilder();
+        List<DiffBlock> newLine = new ArrayList<>();
+
+        // merge to one block
+        for (DiffBlock block : line)
+            sb.append(block.getContent());
+
+        newLine.add(new DiffBlock(sb.toString(), true));
+        line = newLine;
+
+        dst.setLine(newLine);
+
+        isMatched = true;
+        dst.setMatched(true);
+    }
+
+    public List<DiffBlock> getLine() {
         return line;
     }
-
-    public void setLine(ArrayList<DiffBlock> line) {
-        this.line = line;
+    public Boolean getMatched() {
+        return this.isMatched;
+    }
+    public Boolean getSelected() {
+        return isSelected;
     }
 
-    public Boolean getIsMatch(){return this.isMatch;}
-
+    public void setLine(List<DiffBlock> line) {
+        this.line = new ArrayList<>(line);
+    }
+    public void setMatched(boolean matched) {this.isMatched = matched;}
+    public void setSelected(Boolean selected) {
+        isSelected = selected;
+    }
 }
 

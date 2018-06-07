@@ -1,32 +1,39 @@
 package view;
 
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.Diff.DiffBlock;
 import model.Diff.DiffLine;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class DiffLineListViewCell extends ListCell<DiffLine>{
 
     private FXMLLoader mLLoader;
-    private ArrayList<DiffBlock> blocks;
 
     @FXML private FlowPane flowPane;
 
-    @Override
-    protected void updateItem(DiffLine item, boolean empty) {
-        super.updateItem(item, empty);
+    private static PseudoClass MATCH = PseudoClass.getPseudoClass("match");
+    private static PseudoClass MATCH_SELECTED = PseudoClass.getPseudoClass("match-selected");
+    private static PseudoClass MISMATCH = PseudoClass.getPseudoClass("mismatch");
+    private static PseudoClass MISMATCH_SELECTED = PseudoClass.getPseudoClass("mismatch-selected");
 
-        if (empty || item == null){
+    private static Color TEXT_MATCH = Color.BLACK;
+    private static Color TEXT_MISMATCH_MATCH = Color.GREEN;
+    private static Color TEXT_MISMATCH_MISMATCH = Color.WHITE;
+
+    @Override
+    protected void updateItem(DiffLine line, boolean empty) {
+
+        super.updateItem(line, empty);
+
+        if (empty || line == null){
             setText(null);
             setGraphic(null);
         }
@@ -46,52 +53,46 @@ public class DiffLineListViewCell extends ListCell<DiffLine>{
             }
 
             flowPane.getChildren().clear();
-            blocks = item.getLine();
 
-            DropShadow dropShadow = new DropShadow();
-            dropShadow.setRadius(5.0);
-            dropShadow.setOffsetX(3.0);
-            dropShadow.setOffsetY(3.0);
-            dropShadow.setColor(Color.DARKGRAY);
+            // line matches
+            if (line.getMatched()){
 
-            for (DiffBlock block : blocks){
+                if (line.getSelected()) setBackGroundColor(MATCH_SELECTED);
+                else setBackGroundColor(MATCH);
 
-                Text textBlock = new Text(block.getContent());
-
-                // TODO: need to be changed to background color
-                if(block.getMatch()){
-                    textBlock.setFill(Color.GRAY);
-                }
-                else{
-                    textBlock.setFill(Color.YELLOW);
-                    textBlock.setFont(Font.font(null, FontWeight.BOLD, 13));
-                    textBlock.setEffect(dropShadow);
+                if(line.getLine().size() != 0){
+                    Text textBlock = new Text(line.getLine().get(0).getContent());
+                    textBlock.setFill(TEXT_MATCH);
+                    flowPane.getChildren().add(textBlock);
                 }
 
-                flowPane.getChildren().add(textBlock);
             }
+            // line does not match
+            else{
+                if(line.getSelected()) setBackGroundColor(MISMATCH_SELECTED);
+                else setBackGroundColor(MISMATCH);
 
-            setBackgroundColors();
-            flowPane.needsLayoutProperty().addListener((obs,d,d1)->setBackgroundColors());
+                for (DiffBlock block : line.getLine()){
+
+                    Text textBlock = new Text(block.getContent());
+
+                    if (block.getMatch()) textBlock.setFill(TEXT_MISMATCH_MATCH);
+                    else textBlock.setFill(TEXT_MISMATCH_MISMATCH);
+
+                    flowPane.getChildren().add(textBlock);
+                }
+            }
 
             setText(null);
             setGraphic(flowPane);
         }
     }
 
-    private void setBackgroundColors(){
-        final StringBuilder sbColors = new StringBuilder();
-
-        flowPane.getChildrenUnmodifiable().forEach(n->{
-
-            for (DiffBlock block: blocks){
-                if(!block.getMatch())
-                    sbColors.append("rgb(255, 187, 153)");
-            }
-
-        });
-
-        flowPane.setStyle("-fx-background-color: "+sbColors.toString()+";");
+    private void setBackGroundColor(PseudoClass pseudoClass){
+        pseudoClassStateChanged(MATCH, pseudoClass == MATCH);
+        pseudoClassStateChanged(MATCH_SELECTED, pseudoClass == MATCH_SELECTED);
+        pseudoClassStateChanged(MISMATCH, pseudoClass == MISMATCH);
+        pseudoClassStateChanged(MISMATCH_SELECTED, pseudoClass == MISMATCH_SELECTED);
     }
 }
 

@@ -11,16 +11,7 @@ public class DiffBlock {
         this.isMatch = isMatch;
     }
 
-    public void setMatch(boolean match) {
-        isMatch = match;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getContent() {
-
         return content;
     }
 

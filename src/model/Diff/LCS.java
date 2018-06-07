@@ -1,45 +1,43 @@
 package model.Diff;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+
+import static model.Constants.LEFT;
+import static model.Constants.RIGHT;
+
 
 public class LCS {
 
-    public HashMap<String, DiffLine> getDiffByLine(String lLine, String rLine) {
+    public List<DiffLine> getDiffByLine(String lLine, String rLine) {
 
-        HashMap<String, DiffLine> result = new HashMap<>();
-        ArrayList<DiffBlock> lDiffBlocks = new ArrayList<>();
-        ArrayList<DiffBlock> rDiffBlocks = new ArrayList<>();
-        boolean islinematch=true;
+        List<DiffLine> result = new ArrayList<>();
+
+        List<DiffBlock> lDiffBlocks = new ArrayList<>();
+        List<DiffBlock> rDiffBlocks = new ArrayList<>();
+
 
         // if both lines are empty, consider all matches
         if (lLine.isEmpty() && rLine.isEmpty()) {
-
-            result.put("left", new DiffLine(new ArrayList<>()));
-            result.put("right", new DiffLine(new ArrayList<>()));
+            result.add(new DiffLine(lDiffBlocks, true));
+            result.add(new DiffLine(rDiffBlocks, true));
             return result;
+        }
+        // if only one of line is empty
+        else if(lLine.isEmpty() || rLine.isEmpty()){
 
-        }else if(lLine.equals("") || lLine.isEmpty()){
+            if (! rLine.isEmpty()) rDiffBlocks.add(new DiffBlock(rLine, false));
+            if (! lLine.isEmpty()) lDiffBlocks.add(new DiffBlock(lLine, false));
 
-            rDiffBlocks.add(new DiffBlock(rLine, false));
-
-            result.put("left", new DiffLine(new ArrayList<>()));
-            result.put("right", new DiffLine(rDiffBlocks));
+            result.add(new DiffLine(lDiffBlocks, false));
+            result.add(new DiffLine(rDiffBlocks, false));
             return result;
-
-        }else if(rLine.equals("") || rLine.isEmpty()){
-
-            lDiffBlocks.add(new DiffBlock(lLine, false));
-
-            result.put("left", new DiffLine(lDiffBlocks));
-            result.put("right", new DiffLine(new ArrayList<>()));
-            return result;
-
         }
 
         int lLen = lLine.length();
         int rLen = rLine.length();
         int[][] lcs = new int[lLen + 1][rLen + 1];
+
 
         for (int i = 0; i < lLen + 1; i++) lcs[i][0] = 0;
         for (int j = 0; j < rLen + 1; j++) lcs[0][j] = 0;
@@ -71,6 +69,11 @@ public class LCS {
             }
         }
 
+        boolean lineMatch = true;
+        for (boolean match : lMatch) if(!match) lineMatch = false;
+        for (boolean match : rMatch) if(!match) lineMatch = false;
+
+
         boolean isMatch;
         int start;
 
@@ -79,7 +82,6 @@ public class LCS {
         for (i = 1; i < lLen; i++) {
             if (isMatch != lMatch[i]){
                 lDiffBlocks.add(new DiffBlock(lLine.substring(start, i), isMatch));
-                islinematch=false;
 
                 start = i;
                 isMatch = !isMatch;
@@ -96,45 +98,42 @@ public class LCS {
 
                 start = i;
                 isMatch = !isMatch;
-                islinematch=false;
             }
         }
         rDiffBlocks.add(new DiffBlock(rLine.substring(start, rLen),isMatch));
 
-        HashMap<String, DiffLine> result = new HashMap<>();
-        result.put("left", new DiffLine(lDiffBlocks,islinematch));
-        result.put("right", new DiffLine(rDiffBlocks,islinematch));
+        result.add(new DiffLine(lDiffBlocks,lineMatch));
+        result.add(new DiffLine(rDiffBlocks,lineMatch));
 
         return result;
     }
 
-    public HashMap<String, ArrayList<DiffLine>> getDiff(ArrayList<String> left, ArrayList<String> right) {
+    public List<List<DiffLine>> getDiff(List<String> left, List<String> right) {
 
         ArrayList<DiffLine> lMismatch = new ArrayList<>();
         ArrayList<DiffLine> rMismatch = new ArrayList<>();
 
-        if(left.size() < right.size()){
-            for (int i = 0; i < right.size() - left.size(); i++){
-                left.add("");
-            }
-        }else if (left.size() > right.size()){
-            for (int i = 0; i < left.size() - right.size(); i++){
-                right.add("");
-            }
+        // should be padded by file manager
+        assert (left.size() == right.size());
+
+        int size = left.size();
+
+
+        // construct diff from line diff
+        for (int i = 0; i < size; i++) {
+
+            List<DiffLine> lineMismatch = getDiffByLine(left.get(i), right.get(i));
+
+            assert(lineMismatch.get(LEFT).getMatched() == lineMismatch.get(RIGHT).getMatched());
+            lMismatch.add(lineMismatch.get(LEFT));
+            rMismatch.add(lineMismatch.get(RIGHT));
         }
 
-        System.out.println(left.size()+"     /     "+right.size());
-        for (int i = 0; i < Math.max(left.size(), right.size()); i++) {
-            HashMap<String, DiffLine> lineMismatch = getDiffByLine(left.get(i), right.get(i));
+        List<List<DiffLine>> result = new ArrayList<>();
 
-            lMismatch.add(lineMismatch.get("left"));
-            rMismatch.add(lineMismatch.get("right"));
-        }
+        result.add(lMismatch);
+        result.add(rMismatch);
 
-        HashMap<String, ArrayList<DiffLine>> result = new HashMap<>();
-
-        result.put("left", lMismatch);
-        result.put("right", rMismatch);
         return result;
     }
 }
