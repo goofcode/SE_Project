@@ -69,10 +69,9 @@ public class DiffManager {
 
 
     private void resetSelect() {
-        for (int i = 0; i < size; i++) {
-            diff.get(LEFT).get(i).setSelected(false);
-            diff.get(RIGHT).get(i).setSelected(false);
-        }
+
+        for(DiffLine line : diff.get(LEFT)) line.setSelected(false);
+        for(DiffLine line : diff.get(RIGHT)) line.setSelected(false);
     }
 
 }

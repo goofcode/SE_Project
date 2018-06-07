@@ -1,4 +1,6 @@
-
+.list-cell{
+    -fx-background-insets: 1;
+}
 .list-cell:match {
     -fx-background-color: blue;
 }
