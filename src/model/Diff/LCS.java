@@ -118,13 +118,11 @@ public class LCS {
 
         int size = left.size();
 
-
         // construct diff from line diff
         for (int i = 0; i < size; i++) {
 
             List<DiffLine> lineMismatch = getDiffByLine(left.get(i), right.get(i));
 
-            assert(lineMismatch.get(LEFT).getMatched() == lineMismatch.get(RIGHT).getMatched());
             lMismatch.add(lineMismatch.get(LEFT));
             rMismatch.add(lineMismatch.get(RIGHT));
         }
