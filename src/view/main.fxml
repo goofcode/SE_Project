@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:controller="view.Controller" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="view.Controller" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <GridPane gridLinesVisible="true" prefHeight="500.0" prefWidth="640.0">
         <columnConstraints>
@@ -18,19 +18,18 @@
             <BorderPane>
                <center>
                   <StackPane >
-                     <ListView fx:id="left_pannel" editable="false" visible="true" />
-                     <TextArea fx:id="left_textarea" editable="false" visible="false"   />
+                     <ListView fx:id="lLineListView" editable="false" visible="true"/>
+                     <TextArea fx:id="lEditTextArea" editable="true" visible="false"/>
+                     <ListView fx:id="lDiffListView" editable="false" visible="false" onMouseClicked="#onDiffListViewClicked"/>
                   </StackPane>
-
-
                </center>
                <top>
                   <FlowPane hgap="8.0" prefHeight="16.0" prefWidth="350.0">
                      <children>
-                        <Button fx:id="l_load_btn"  minWidth="70.0" mnemonicParsing="false"   onAction="#load_file" text="Load" />
-                        <Button fx:id="l_edit_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#edit_file" text="Edit" />
-                        <Button fx:id="l_save_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#save_file" text="Save" />
-                        <Button fx:id="l_copy_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#copy_file" text="Copy" />
+                        <Button fx:id="lLoadBtn" minWidth="70.0" mnemonicParsing="false" onAction="#onLoadBtnClicked" text="Load" />
+                        <Button fx:id="lEditBtn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#onEditBtnClicked" text="Edit" />
+                        <Button fx:id="lSaveBtn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#onSaveBtnClicked" text="Save" />
+                        <Button fx:id="lCopyBtn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#onCopyBtnClicked" text="Copy" />
                      </children>
                      <BorderPane.margin>
                         <Insets bottom="7.0" left="10.0" top="7.0" />
@@ -41,18 +40,18 @@
             <BorderPane GridPane.columnIndex="1">
                <center>
                   <StackPane>
-                     <ListView fx:id="right_pannel" editable="false" visible="true"/>
-                     <TextArea fx:id="right_textarea" editable="false" visible="false"  />
+                     <ListView fx:id="rLineListView" editable="false" visible="true"/>
+                     <TextArea fx:id="rEditTextArea" editable="true" visible="false"  />
+                     <ListView fx:id="rDiffListView" editable="false" visible="false" onMouseClicked="#onDiffListViewClicked"/>
                   </StackPane>
-
                </center>
                <top>
                   <FlowPane hgap="8.0" prefHeight="16.0" prefWidth="350.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="r_load_btn" minWidth="70.0" mnemonicParsing="false" onAction="#load_file" text="Load" />
-                        <Button fx:id="r_edit_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#edit_file" text="Edit" />
-                        <Button fx:id="r_save_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#save_file" text="Save" />
-                        <Button fx:id="r_copy_btn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#copy_file" text="Copy" />
+                        <Button fx:id="rLoadBtn" minWidth="70.0" mnemonicParsing="false" onAction="#onLoadBtnClicked" text="Load" />
+                        <Button fx:id="rEditBtn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#onEditBtnClicked" text="Edit" />
+                        <Button fx:id="rSaveBtn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#onSaveBtnClicked" text="Save" />
+                        <Button fx:id="rCopyBtn" minWidth="70.0" mnemonicParsing="false" disable="true" onAction="#onCopyBtnClicked" text="Copy" />
                      </children>
                      <BorderPane.margin>
                         <Insets bottom="7.0" left="10.0" top="7.0" />
@@ -64,7 +63,7 @@
       </GridPane>
    </center>
    <top>
-      <Button fx:id="comp_btn" mnemonicParsing="false" text="Compare" disable="true" BorderPane.alignment="TOP_LEFT" onAction="#compare_file">
+      <Button fx:id="compareBtn" mnemonicParsing="false" text="Compare" disable="true" BorderPane.alignment="TOP_LEFT" onAction="#onCompareBtnClicked">
          <BorderPane.margin>
             <Insets bottom="7.0" left="10.0" top="7.0" />
          </BorderPane.margin>

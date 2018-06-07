@@ -1,222 +1,275 @@
 package view;
 
+import com.sun.istack.internal.Nullable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-import javafx.util.Callback;
+import model.Diff.DiffLine;
+import model.Diff.LCS;
 import model.FileManager;
-import sun.font.GlyphLayout;
+import model.DiffManager;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
+import java.net.URL;
+import java.util.*;
 
+import static model.Constants.LEFT;
+import static model.Constants.RIGHT;
 
-public class Controller {
-    private static final int LEFT = 0;
-    private static final int RIGHT =1;
-    @FXML private ListView<String> left_pannel;
-    @FXML private ListView<String> right_pannel;
+public class Controller implements Initializable {
 
-    @FXML private TextArea left_textarea;
-    @FXML private TextArea right_textarea;
-    @FXML private Button l_load_btn, l_save_btn, l_edit_btn ,r_load_btn, r_copy_btn, l_copy_btn, r_edit_btn, r_save_btn,comp_btn;
+    /* FXML view components */
+    @FXML private ListView<String> lLineListView, rLineListView;
+    @FXML private ListView<DiffLine> lDiffListView, rDiffListView;
+    @FXML private TextArea lEditTextArea, rEditTextArea;
+    @FXML private Button lLoadBtn, rLoadBtn;
+    @FXML private Button lEditBtn, rEditBtn;
+    @FXML private Button lSaveBtn, rSaveBtn;
+    @FXML private Button lCopyBtn, rCopyBtn;
+    @FXML private Button compareBtn;
 
+    /* view component lists for easier control over them */
+    private List<ListView<String>> lineListView;
+    private List<ListView<DiffLine>> diffListView;
+    private List<TextArea> editTextArea;
+    private List<Button> loadBtn, editBtn, saveBtn, copyBtn;
 
-    private ObservableList<String>[] list;
-    private FileManager[] fileManager =new FileManager[2];
-    private boolean loadFlag[] = new boolean[2];
-    private boolean editFlag[] = new boolean[2];
+    /* models */
+    private FileManager[] fileManagers;
+    private DiffManager diffManager;
+
+    /* states */
+    private boolean[] isLoaded = new boolean[]{false, false};
+    private boolean[] isEditToggled = new boolean[]{false, false};
+    private boolean isCompared = false;
+    private boolean isSelected = false;
+
 
     private Alert alert;
 
-    public Controller(){
-        loadFlag[LEFT] = loadFlag[RIGHT] = false;
-        editFlag[LEFT] = editFlag[RIGHT] = true;
-        list = new ObservableList[2];
-        fileManager[LEFT] = new FileManager();
-        fileManager[RIGHT] = new FileManager();
-    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        // allocate lists
+        lineListView = new ArrayList<>(Arrays.asList(lLineListView, rLineListView));
+        diffListView = new ArrayList<>(Arrays.asList(lDiffListView, rDiffListView));
+        editTextArea = new ArrayList<>(Arrays.asList(lEditTextArea, rEditTextArea));
+        loadBtn = new ArrayList<>(Arrays.asList(lLoadBtn, rLoadBtn));
+        editBtn = new ArrayList<>(Arrays.asList(lEditBtn, rEditBtn));
+        saveBtn = new ArrayList<>(Arrays.asList(lSaveBtn, rSaveBtn));
+        copyBtn = new ArrayList<>(Arrays.asList(lCopyBtn, rCopyBtn));
+
+        fileManagers = new FileManager[2];
+        diffManager = new DiffManager();
 
 
-    @FXML
-    protected void load_file(ActionEvent event) {
-
-        String btn_name = ((Node)event.getSource()).getId().toString();
-        if(btn_name.equals("l_load_btn")) {
-            if (loadFile(event, LEFT)) {
-                l_save_btn.setDisable(false);
-                l_edit_btn.setDisable(false);
-            }
-        }
-        else{
-            if(loadFile(event,RIGHT)){
-                r_save_btn.setDisable(false);
-                r_edit_btn.setDisable(false);
-            }
-        }
-    }
-
-
-
-    @FXML
-    protected void edit_file(ActionEvent event){
-        String btn_name = ((Node)event.getSource()).getId().toString();
-        if(btn_name.equals("l_edit_btn")) {
-            if (editFlag[LEFT]) {
-                System.out.println("left_edit_file toggle on!");
-                editFlag[LEFT] = false;
-                swapListViewToTextArea(LEFT);
-            } else {
-                System.out.println("left_edit_file toggle off!");
-                editFlag[LEFT] = true;
-                swapTextAreaToListView(LEFT);
-            }
-        }
-        else{
-            if(editFlag[RIGHT]) {
-                System.out.println("right_edit_file toggle on!");
-                editFlag[RIGHT] = false;
-                swapListViewToTextArea(RIGHT);
-            }
-            else{
-                System.out.println("right_edit_file toggle off!");
-                editFlag[RIGHT] = true;
-                swapTextAreaToListView(RIGHT);
-            }
-        }
     }
 
     @FXML
-    protected void save_file(ActionEvent event){
-        String btn_name = ((Node)event.getSource()).getId().toString();
-        if(btn_name.equals("l_save_btn")){
-            System.out.println("left_save_file click!");
-            if(saveFile(LEFT))
-                System.out.println("save done!");
+    protected void onLoadBtnClicked(ActionEvent e) {
+
+        int side = e.getSource() == loadBtn.get(LEFT) ? LEFT : RIGHT;
+        int other = side == LEFT? RIGHT: LEFT;
+
+        // get file from user selection
+        File file = (new FileChooser()).showOpenDialog(((Node) e.getSource()).getScene().getWindow());
+
+        if(file == null) {
+            alertInfo("File not selected", "pleas choose file to load");
+            return;
         }
+
+        fileManagers[side] = new FileManager(file);
+
+        if (fileManagers[other] != null) {
+
+            int size = fileManagers[side].getSize();
+            int otherSize = fileManagers[other].getSize();
+
+            if (size < otherSize)
+                fileManagers[side].padFile(otherSize - size);
+            else if (size > otherSize)
+                fileManagers[other].padFile(size - otherSize);
+        }
+
+        isLoaded[side] = true;
+        isEditToggled[side] = false;
+        isCompared = false;
+        isSelected = false;
+
+        refresh(LEFT);
+        refresh(RIGHT);
+    }
+
+    public void onEditBtnClicked(ActionEvent e) {
+
+        int side = e.getSource() == editBtn.get(LEFT) ? LEFT : RIGHT;
+
+        // if not toggled
+        if (!isEditToggled[side])
+            isEditToggled[side] = true;
+
+        // if already toggled
         else {
-            System.out.println("right_save_file click!");
-            if(saveFile(RIGHT))
-                System.out.println("save done!");
+            isEditToggled[side] = false;
+            fileManagers[side].setLinesFromOneString(editTextArea.get(side).getText());
         }
 
+        isCompared = false;
+        isSelected = false;
+
+        refresh(LEFT);
+        refresh(RIGHT);
+    }
+
+    public void onSaveBtnClicked(ActionEvent e) {
+
+        int side = e.getSource() == saveBtn.get(LEFT) ? LEFT : RIGHT;
+
+        // save file
+        fileManagers[side].save();
+
+        // change to line list view mode
+        isLoaded[side] = true;
+        isEditToggled[side] = false;
+        isCompared = true;
+        isSelected = false;
+
+        refresh(LEFT);
+        refresh(RIGHT);
+    }
+
+    public void onCompareBtnClicked(ActionEvent e) {
+
+        diffManager.init((new LCS()).getDiff(fileManagers[LEFT].getLines(), fileManagers[RIGHT].getLines()));
+
+        isLoaded[LEFT] = isLoaded[RIGHT] = true;
+        isEditToggled[LEFT] = isEditToggled[RIGHT] = false;
+        isCompared = true;
+        isSelected = false;
+
+        refresh(LEFT);
+        refresh(RIGHT);
+    }
+
+
+    public void onDiffListViewClicked(MouseEvent e) {
+
+        int side = e.getSource() == diffListView.get(LEFT)? LEFT: RIGHT;
+        int selected = diffListView.get(side).getSelectionModel().getSelectedIndex();
+
+        if (selected == -1) return;
+
+        diffManager.selectsDiffBound(selected);
+
+        isSelected = true;
+
+        refresh(LEFT);
+        refresh(RIGHT);
+    }
+
+    public void onCopyBtnClicked(ActionEvent e) {
+
+        int srcSide = e.getSource() == copyBtn.get(LEFT) ? LEFT : RIGHT;
+
+        if (!isSelected){
+            alertInfo("Block to be copied not selected", "please select block to copy");
+            return;
+        }
+        diffManager.merge(srcSide, fileManagers);
+
+        refresh(LEFT);
+        refresh(RIGHT);
     }
 
 
 
+    // update ui components based on state rule
+    private void refresh(int side){
 
-    @FXML
-    protected void copy_file(ActionEvent event){
-        String btn_name = ((Node)event.getSource()).getId().toString();
-        if(btn_name.equals("l_copy_btn")) {
-            System.out.println("left_copy click!");
+        if(isLoaded[LEFT] && isLoaded[RIGHT])
+            compareBtn.setDisable(false);
+
+        if(isCompared){
+
+            diffListView.get(LEFT).setItems(FXCollections.observableArrayList(diffManager.getLines(LEFT)));
+            diffListView.get(LEFT).setCellFactory(diffList-> new DiffLineListViewCell());
+            diffListView.get(RIGHT).setItems(FXCollections.observableArrayList(diffManager.getLines(RIGHT)));
+            diffListView.get(RIGHT).setCellFactory(diffList-> new DiffLineListViewCell());
+
+            showDiffListView(LEFT);
+            showDiffListView(RIGHT);
+
+            diffListView.get(LEFT).refresh();
+            diffListView.get(RIGHT).refresh();
+
+            activateBtn(LEFT, true, true, true, true);
+            activateBtn(RIGHT, true, true, true, true);
         }
-        else{
-            System.out.println("right_copy click!");
+
+        // if loaded, not editing, not compared
+        else if (isLoaded[side] && !isEditToggled[side] && !isCompared) {
+
+            lineListView.get(side).setItems(FXCollections.observableArrayList(fileManagers[side].getLines()));
+
+            showLineListView(side);
+            activateBtn(side, true, true, false, false);
+
+            lineListView.get(side).refresh();
         }
+
+
+        else if(isLoaded[side] && isEditToggled[side]){
+
+            editTextArea.get(side).setText(fileManagers[side].getLinesAsOneString());
+
+            showEditTextArea(side);
+            activateBtn(side, true, true, true, false);
+        }
+
+
+    }
+
+    private void showLineListView(int side){
+        lineListView.get(side).setVisible(true);
+        editTextArea.get(side).setVisible(false);
+        diffListView.get(side).setVisible(false);
+    }
+    private void showEditTextArea(int side){
+        lineListView.get(side).setVisible(false);
+        editTextArea.get(side).setVisible(true);
+        diffListView.get(side).setVisible(false);
+    }
+    private void showDiffListView(int side){
+        lineListView.get(side).setVisible(false);
+        editTextArea.get(side).setVisible(false);
+        diffListView.get(side).setVisible(true);
+    }
+    private void activateBtn(int side, boolean load, boolean edit, boolean save, boolean copy){
+        loadBtn.get(side).setDisable(!load);
+        editBtn.get(side).setDisable(!edit);
+        saveBtn.get(side).setDisable(!save);
+        copyBtn.get(side).setDisable(!copy);
     }
 
 
-    @FXML
-    protected void compare_file(ActionEvent event){
-        System.out.println("compare_file click!");
+    private void alertInfo(@Nullable String title, String msg){
+        alert = new Alert(Alert.AlertType.INFORMATION);
+
+        if(title != null) alert.setHeaderText(title);
+        alert.setContentText(msg);
+
+        alert.showAndWait();
     }
 
-    private File fileChooser(ActionEvent event){
-        FileChooser fileChooser = new FileChooser();
-        return fileChooser.showOpenDialog(((Node)event.getSource()).getScene().getWindow());
-    }
-    private void loadFlagCheck(){
-        if(loadFlag[LEFT] && loadFlag[RIGHT])
-            comp_btn.setDisable(false);
-    }
-    private void swapTextAreaToListView(int side){
-        TextArea area;
-        ListView<String> panel;
-        if(side == LEFT){
-            area = left_textarea;
-            panel = left_pannel;
-        }
-        else{
-            area = right_textarea;
-            panel = right_pannel;
-        }
-        ArrayList<String> k = new ArrayList<String>();
-        for(CharSequence sequence :  area.getParagraphs()){
-            k.add(sequence.toString());
-        }
 
-        fileManager[side].setText(k);
-
-        list[side] = FXCollections.observableList(fileManager[side].getText());
-        panel.setItems(list[side]);
-        area.setEditable(false);
-        area.setVisible(false);
-        panel.setVisible(true);
-    }
-    private void swapListViewToTextArea(int side){
-        ListView<String> panel;
-        TextArea area;
-        if(side ==LEFT){
-            panel = left_pannel;
-            area = left_textarea;
-        }
-        else{
-            panel = right_pannel;
-            area = right_textarea;
-        }
-
-        panel.setVisible(false);
-        StringBuilder text = new StringBuilder();
-        for(int i =0; i < panel.getItems().size();i++){
-            if(i <  panel.getItems().size()-1)
-                text.append(fileManager[side].getText().get(i)).append("\n");
-            else
-                text.append(fileManager[side].getText().get(i));
-        }
-
-        area.setText(text.toString());
-        area.setVisible(true);
-        area.setEditable(true);
-    }
-
-    private Boolean loadFile(ActionEvent event, int side){
-        ListView<String> panel;
-        if(side ==LEFT)
-            panel = left_pannel;
-        else
-            panel = right_pannel;
-        File file = fileChooser(event);
-        if(file != null){
-            fileManager[side].clearText();
-            fileManager[side].loadFile(file);
-            list[side] = FXCollections.observableList(fileManager[side].getText());
-            panel.setItems(list[side]);
-            loadFlag[side] = true;
-            loadFlagCheck();
-            return true;
-        }
-       else
-           return false;
-    }
-
-    private Boolean saveFile(int side){
-        try {
-            fileManager[side].saveFile(fileManager[side].getFile());
-            return true;
-        }catch (IOException e){
-            e.printStackTrace();
-            return false;
-        }
-    }
 }
+
+
