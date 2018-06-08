@@ -1,5 +1,6 @@
 package view;
 
+import javafx.css.PseudoClass;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -75,7 +76,14 @@ public class MainTest extends ApplicationTest{
         clickOn("#compareBtn");
 
         // copy to left
-        clickOn((Node)lookup(".mismatch").query());
+        Node mismatchCell = null;
+        for(Node node : lookup(".list-cell").queryAll()){
+            if(node.getPseudoClassStates().contains(PseudoClass.getPseudoClass("mismatch"))){
+                mismatchCell = node;
+                break;
+            }
+        }
+        clickOn(mismatchCell);
         clickOn("#rCopyBtn");
 
         // save left
