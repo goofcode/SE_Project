@@ -52,8 +52,6 @@ public class MainTest extends ApplicationTest{
         String file1 = "asd.txt";
         clickOn("#lLoadBtn");
         sleep(1000);
-        /*write("D").type(KeyCode.SHIFT,KeyCode.SEMICOLON)
-                .type(KeyCode.ENTER).write(file1).type(KeyCode.ENTER);*/
         push(KeyCode.SHIFT,KeyCode.D).push(KeyCode.SHIFT,KeyCode.SEMICOLON).push(KeyCode.BACK_SLASH);
         push(KeyCode.A).push(KeyCode.S).push(KeyCode.D).push(KeyCode.UP).push(KeyCode.ENTER);
 
@@ -69,7 +67,7 @@ public class MainTest extends ApplicationTest{
 
         System.out.println("left file saved");
 
-        // load same file on right side
+        // load file on right side
         String file2 = "asd.txt.txt";
         clickOn("#rLoadBtn");
         push(KeyCode.SHIFT,KeyCode.D).push(KeyCode.SHIFT,KeyCode.SEMICOLON).push(KeyCode.BACK_SLASH);
