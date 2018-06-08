@@ -78,7 +78,9 @@ public class Controller implements Initializable {
         int other = side == LEFT? RIGHT: LEFT;
 
         // get file from user selection
-        File file = (new FileChooser()).showOpenDialog(((Node) e.getSource()).getScene().getWindow());
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("."));
+        File file = fileChooser.showOpenDialog(((Node) e.getSource()).getScene().getWindow());
 
         if(file == null) {
             alertInfo("File not selected", "pleas choose file to load");
@@ -171,13 +173,16 @@ public class Controller implements Initializable {
 
     public void onCopyBtnClicked(ActionEvent e) {
 
-        int srcSide = e.getSource() == copyBtn.get(LEFT) ? LEFT : RIGHT;
+        int src = e.getSource() == copyBtn.get(LEFT) ? LEFT : RIGHT;
+        int dst = src == LEFT? RIGHT: LEFT;
 
         if (!isSelected){
             alertInfo("Block to be copied not selected", "please select block to copy");
             return;
         }
-        diffManager.merge(srcSide, fileManagers);
+
+        List<Integer> bound = diffManager.mergeFrom(src);
+        fileManagers[src].copyTo(fileManagers[dst], bound);
 
         refresh(LEFT);
         refresh(RIGHT);
