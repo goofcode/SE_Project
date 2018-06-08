@@ -12,10 +12,15 @@ import org.loadui.testfx.utils.FXTestUtils;
 
 import java.util.concurrent.TimeUnit;
 
+import static model.Constants.LEFT;
+import static model.Constants.RIGHT;
 import static org.junit.Assert.*;
+import static view.TestUtils.*;
 
 public class EditTest extends GuiTest {
+
     private static final SettableFuture<Stage> stageFuture = SettableFuture.create();
+    public static Controller controller;
 
     protected static class TestProgramInfoWindow extends Main {
         public TestProgramInfoWindow() {
@@ -39,14 +44,11 @@ public class EditTest extends GuiTest {
             throw new RuntimeException("Unable to show stage", e);
         }
     }
+
     @Override
     protected Parent getRootNode() {
         return stage.getScene().getRoot();
     }
-
-
-
-    public static Controller controller;
 
     @BeforeClass
     public static void makeInstance()throws Exception{
@@ -56,27 +58,96 @@ public class EditTest extends GuiTest {
 
     @Before
     public void beforeTest()throws Exception{
-        System.out.println("before!!!!!!");
-        String file1 = "asd.txt";
-        String file2 = "asd.txt.txt";
-        click("#lLoadBtn");
-        type("D").type(KeyCode.SHIFT,KeyCode.SEMICOLON).type(KeyCode.ENTER);
-        type(file1).type(KeyCode.ENTER);
-        sleep(1000);
-
-        click("#rLoadBtn");
-        type("D").type(KeyCode.SHIFT,KeyCode.SEMICOLON).type(KeyCode.ENTER);
-        type(file2).type(KeyCode.ENTER);
-
-        sleep(1000);
+        loadFile(this, LEFT, file1, false);
+        loadFile(this, RIGHT, file2, false);
     }
-    @Test
-    public void onEditBtnClicked() {
-        click("#lEditBtn");
-        sleep(1000);
-        assertFalse(GuiTest.find("#lSaveBtn").isDisabled());
-        click("#rEditBtn");
-        assertFalse(GuiTest.find("#rSaveBtn").isDisabled());
 
+    private void checkViewBeforeEdit(){
+
+        assertFalse(GuiTest.find("#lEditBtn").isDisabled());
+        assertTrue(GuiTest.find("#lSaveBtn").isDisabled());
+        assertTrue(GuiTest.find("#lCopyBtn").isDisabled());
+
+        assertFalse(GuiTest.find("#rEditBtn").isDisabled());
+        assertTrue(GuiTest.find("#rSaveBtn").isDisabled());
+        assertTrue(GuiTest.find("#rCopyBtn").isDisabled());
+
+        assertFalse(GuiTest.find("#compareBtn").isDisabled());
+    }
+    private void checkViewAfterEditOn(int side){
+
+        if(side == LEFT) {
+            assertFalse(GuiTest.find("#lLoadBtn").isDisabled());
+            assertFalse(GuiTest.find("#lSaveBtn").isDisabled());
+            assertFalse(GuiTest.find("#lLineListView").isVisible());
+            assertTrue(GuiTest.find("#lEditTextArea").isVisible());
+        }
+        else if (side == RIGHT){
+            assertFalse(GuiTest.find("#rLoadBtn").isDisabled());
+            assertFalse(GuiTest.find("#rSaveBtn").isDisabled());
+            assertFalse(GuiTest.find("#rLineListView").isVisible());
+            assertTrue(GuiTest.find("#rEditTextArea").isVisible());
+        }
+
+    }
+    private void checkViewAfterEditOff(int side){
+
+        if(side == LEFT) {
+            assertFalse(GuiTest.find("#lLoadBtn").isDisabled());
+            assertFalse(GuiTest.find("#lSaveBtn").isDisabled());
+            assertTrue(GuiTest.find("#lLineListView").isVisible());
+            assertFalse(GuiTest.find("#lEditTextArea").isVisible());
+        }
+        else if (side == RIGHT){
+            assertFalse(GuiTest.find("#rLoadBtn").isDisabled());
+            assertFalse(GuiTest.find("#rSaveBtn").isDisabled());
+            assertTrue(GuiTest.find("#rLineListView").isVisible());
+            assertFalse(GuiTest.find("#rEditTextArea").isVisible());
+        }
+    }
+    private void checkViewAfterLoadWhileEdit(int side){
+
+        if(side == LEFT){
+            assertFalse(GuiTest.find("#lEditBtn").isDisabled());
+            assertTrue(GuiTest.find("#lSaveBtn").isDisabled());
+            assertTrue(GuiTest.find("#lCopyBtn").isDisabled());
+        }
+        else if (side == RIGHT){
+            assertFalse(GuiTest.find("#rEditBtn").isDisabled());
+            assertTrue(GuiTest.find("#rSaveBtn").isDisabled());
+            assertTrue(GuiTest.find("#rCopyBtn").isDisabled());
+        }
+    }
+
+    @Test
+    public void editTest() throws Exception{
+
+        checkViewBeforeEdit();
+
+        click("#lEditBtn");     // toggle on
+        checkViewAfterEditOn(LEFT);
+
+        click("rEditBtn");
+        checkViewAfterEditOn(RIGHT);
+
+        click("#lEditBtn");
+        checkViewAfterEditOff(LEFT);
+
+        click("#rEditBtn");
+        checkViewAfterEditOff(RIGHT);
+    }
+
+    @Test
+    public void loadWhileEdit() throws Exception {
+
+        // left side
+        click("#lEditBtn");
+        loadFile(this, LEFT, file1, false);
+        checkViewAfterLoadWhileEdit(LEFT);
+
+        // right side
+        click("#rEditBtn");
+        loadFile(this, RIGHT, file2, false);
+        checkViewAfterLoadWhileEdit(RIGHT);
     }
 }

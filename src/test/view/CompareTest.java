@@ -1,5 +1,6 @@
 package view;
 
+
 import com.google.common.util.concurrent.SettableFuture;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
@@ -12,10 +13,17 @@ import org.loadui.testfx.utils.FXTestUtils;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
+import static model.Constants.LEFT;
+import static model.Constants.RIGHT;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static view.TestUtils.*;
 
 public class CompareTest extends GuiTest {
+
     private static final SettableFuture<Stage> stageFuture = SettableFuture.create();
+
+    public static Controller controller;
 
     protected static class TestProgramInfoWindow extends Main {
         public TestProgramInfoWindow() {
@@ -39,14 +47,11 @@ public class CompareTest extends GuiTest {
             throw new RuntimeException("Unable to show stage", e);
         }
     }
+
     @Override
     protected Parent getRootNode() {
         return stage.getScene().getRoot();
     }
-
-
-
-    public static Controller controller;
 
     @BeforeClass
     public static void makeInstance()throws Exception{
@@ -54,28 +59,99 @@ public class CompareTest extends GuiTest {
 
     }
 
+    private void checkViewBeforeCompare(){
+
+        assertFalse(find("#lEditBtn").isDisabled());
+        assertTrue(find("#lSaveBtn").isDisabled());
+        assertTrue(find("#lCopyBtn").isDisabled());
+
+        assertFalse(find("#rEditBtn").isDisabled());
+        assertTrue(find("#rSaveBtn").isDisabled());
+        assertTrue(find("#rCopyBtn").isDisabled());
+
+        assertFalse(find("#compareBtn").isDisabled());
+    }
+    private void checkViewAfterCompare(){
+
+        assertFalse(find("#lEditBtn").isDisabled());
+        assertTrue(find("#lSaveBtn").isDisabled());
+        assertFalse(find("#lCopyBtn").isDisabled());
+
+        assertFalse(find("#rEditBtn").isDisabled());
+        assertTrue(find("#rSaveBtn").isDisabled());
+        assertFalse(find("#rCopyBtn").isDisabled());
+
+        assertFalse(find("#compareBtn").isDisabled());
+
+        assertFalse(find("#lLineListView").isVisible());
+        assertFalse(find("#lEditTextView").isVisible());
+        assertTrue(find("#lDiffListView").isVisible());
+
+        assertFalse(find("#rLineListView").isVisible());
+        assertFalse(find("#rEditTextView").isVisible());
+        assertTrue(find("#rDiffListView").isVisible());
+    }
+    private void checkViewAfterCompareWhileEdit(){
+        assertFalse(find("#lEditBtn").isDisabled());
+        assertFalse(find("#lSaveBtn").isDisabled());
+        assertFalse(find("#lCopyBtn").isDisabled());
+
+        assertFalse(find("#rEditBtn").isDisabled());
+        assertFalse(find("#rSaveBtn").isDisabled());
+        assertFalse(find("#rCopyBtn").isDisabled());
+
+        assertFalse(find("#compareBtn").isDisabled());
+
+        assertFalse(find("#lLineListView").isVisible());
+        assertFalse(find("#lEditTextView").isVisible());
+        assertTrue(find("#lDiffListView").isVisible());
+
+        assertFalse(find("#rLineListView").isVisible());
+        assertFalse(find("#rEditTextView").isVisible());
+        assertTrue(find("#rDiffListView").isVisible());
+
+    }
+
     @Before
     public void beforeTest()throws Exception {
-        System.out.println("before!!!!!!");
-        String file1 = "asd.txt";
-        String file2 = "asd.txt.txt";
-        click("#lLoadBtn");
-        type("D").type(KeyCode.SHIFT, KeyCode.SEMICOLON).type(KeyCode.ENTER);
-        type(file1).type(KeyCode.ENTER);
-        sleep(1000);
+        loadFile(this, LEFT, file1, false);
+        loadFile(this, RIGHT, file2, false);
+    }
 
-        click("#rLoadBtn");
-        type("D").type(KeyCode.SHIFT, KeyCode.SEMICOLON).type(KeyCode.ENTER);
-        type(file2).type(KeyCode.ENTER);
 
-        sleep(1000);
+    @Test
+    public void compareTest() throws Exception {
+
+        checkViewBeforeCompare();
+        click("#compareBtn");
+        checkViewAfterCompare();
     }
 
     @Test
-    public void onCompareBtnClicked() {
-        click("#compareBtn");
-        assertFalse(GuiTest.find("#lCopyBtn").isDisabled());
-        assertFalse(GuiTest.find("#rCopyBtn").isDisabled());
+    public void compareWhileLeftEditTest() throws Exception {
 
+        checkViewBeforeCompare();
+        click("#lEditBtn");
+        click("#compareBtn");
+        checkViewAfterCompareWhileEdit();
+    }
+
+    @Test
+    public void compareWhileRightEditTest() throws Exception {
+
+        checkViewBeforeCompare();
+        click("#rEditBtn");
+        click("#compareBtn");
+        checkViewAfterCompareWhileEdit();
+    }
+
+    @Test
+    public void compareWhileBothEditTest() throws Exception {
+
+        checkViewBeforeCompare();
+        click("#lEditBtn");
+        click("#rEditBtn");
+        click("#compareBtn");
+        checkViewAfterCompareWhileEdit();
     }
 }

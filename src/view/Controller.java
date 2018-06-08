@@ -78,7 +78,9 @@ public class Controller implements Initializable {
         int other = side == LEFT? RIGHT: LEFT;
 
         // get file from user selection
-        File file = (new FileChooser()).showOpenDialog(((Node) e.getSource()).getScene().getWindow());
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("."));
+        File file = fileChooser.showOpenDialog(((Node) e.getSource()).getScene().getWindow());
 
         if(file == null) {
             alertInfo("File not selected", "pleas choose file to load");
