@@ -2,6 +2,8 @@ package view;
 
 
 import com.google.common.util.concurrent.SettableFuture;
+import javafx.collections.ObservableSet;
+import javafx.css.PseudoClass;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
@@ -12,6 +14,7 @@ import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import org.loadui.testfx.utils.FXTestUtils;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static model.Constants.LEFT;
@@ -19,8 +22,7 @@ import static model.Constants.RIGHT;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static view.TestUtils.file1;
-import static view.TestUtils.file2;
+import static view.TestUtils.*;
 
 public class CopyTest extends GuiTest {
 
@@ -42,7 +44,7 @@ public class CopyTest extends GuiTest {
     @Before
     @Override
     public void setupStage()  {
-        FXTestUtils.launchApp(CompareTest.TestProgramInfoWindow.class); // You can add start parameters here
+        FXTestUtils.launchApp(CopyTest.TestProgramInfoWindow.class); // You can add start parameters here
         try {
             stage = targetWindow(stageFuture.get(25, TimeUnit.SECONDS));
             FXTestUtils.bringToFront(stage);
@@ -62,6 +64,7 @@ public class CopyTest extends GuiTest {
 
     }
 
+
     private void checkViewAfterCopy(){
 
         assertFalse(find("#lEditBtn").isDisabled());
@@ -75,34 +78,34 @@ public class CopyTest extends GuiTest {
         assertFalse(find("#compareBtn").isDisabled());
     }
 
-    private void loadFile(int side, String filename){
 
-        if (side == LEFT) click("#lLoadBtn");
-        else click("#rLoadBtn");
-
-        type("D").type(KeyCode.SHIFT,KeyCode.SEMICOLON).type(KeyCode.ENTER);
-        type(filename).type(KeyCode.ENTER);
-        sleep(1000);
-    }
 
 
     @Before
-    public void beforeTest()throws Exception {
-        loadFile(LEFT, file1);
-        loadFile(RIGHT, file2);
+    public void beforeTest()throws Exception{
+        loadFile(this, LEFT, file1, false);
+        loadFile(this, RIGHT, file2, false);
+    
         click("#compareBtn");
     }
 
     @Test
     public void copyTest() throws Exception {
 
-        click((Node)find(".list-cell .mismatch"));
-        click("lCopyBtn");
-        checkViewAfterCopy();
+        Node matchCell = null;
+            for(Node node : findAll(".list-cell")){
+                if(node.getPseudoClassStates().contains(PseudoClass.getPseudoClass("mismatch"))){
+                    matchCell = node;
+                    break;
+                }
+            }
+            if (matchCell != null) {
+            click(matchCell);
+        }
+        click("#lCopyBtn");
 
-        click((Node)find(".list-cell .mismatch"));
-        click("rCopyBtn");
-        checkViewAfterCopy();
+            sleep(1000);
+
 
     }
 }

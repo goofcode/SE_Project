@@ -46,6 +46,7 @@ public class Controller implements Initializable {
     /* states */
     private boolean[] isLoaded = new boolean[]{false, false};
     private boolean[] isEditToggled = new boolean[]{false, false};
+    private boolean[] isModified = new boolean[]{false, false};
     private boolean isCompared = false;
     private boolean isSelected = false;
 
@@ -94,6 +95,7 @@ public class Controller implements Initializable {
 
         isLoaded[side] = true;
         isEditToggled[side] = false;
+        isModified[side] = false;
         isCompared = false;
         isSelected = false;
 
@@ -118,6 +120,7 @@ public class Controller implements Initializable {
                 fileManagers[side].synchronizeSize(fileManagers[other]);
         }
 
+        isModified[side] = true;
         isCompared = false;
         isSelected = false;
 
@@ -130,12 +133,15 @@ public class Controller implements Initializable {
         int side = e.getSource() == saveBtn.get(LEFT) ? LEFT : RIGHT;
 
         // save file
+        if(isEditToggled[side])
+            fileManagers[side].setLinesFromOneString(editTextArea.get(side).getText());
         fileManagers[side].save();
 
         // change to line list view mode
         isLoaded[side] = true;
         isEditToggled[side] = false;
-        isCompared = true;
+        isModified[side] = false;
+        isCompared = false;
         isSelected = false;
 
         refresh(LEFT);
@@ -162,6 +168,7 @@ public class Controller implements Initializable {
         int selected = diffListView.get(side).getSelectionModel().getSelectedIndex();
 
         if (selected == -1) return;
+        System.out.println(selected);
 
         diffManager.selectsDiffBound(selected);
 
@@ -181,6 +188,8 @@ public class Controller implements Initializable {
             return;
         }
 
+        isModified[dst] = true;
+        
         List<Integer> bound = diffManager.mergeFrom(src);
         fileManagers[src].copyTo(fileManagers[dst], bound);
 
@@ -193,10 +202,13 @@ public class Controller implements Initializable {
     // update ui components based on state rule
     private void refresh(int side){
 
-        if(isLoaded[LEFT] && isLoaded[RIGHT])
-            compareBtn.setDisable(false);
+        compareBtn.setDisable(!(isLoaded[LEFT] && isLoaded[RIGHT] && !isEditToggled[LEFT] && !isEditToggled[RIGHT]));
+        saveBtn.get(side).setDisable(!isModified[side]);
 
         if(isCompared){
+
+            diffListView.get(LEFT).getItems().clear();
+            diffListView.get(RIGHT).getItems().clear();
 
             diffListView.get(LEFT).setItems(FXCollections.observableArrayList(diffManager.getLines(LEFT)));
             diffListView.get(LEFT).setCellFactory(diffList-> new DiffLineListViewCell());
@@ -217,12 +229,12 @@ public class Controller implements Initializable {
             diffListView.get(LEFT).refresh();
             diffListView.get(RIGHT).refresh();
 
-            activateBtn(LEFT, true, true, true, true);
-            activateBtn(RIGHT, true, true, true, true);
+            activateBtn(LEFT, true, true, true);
+            activateBtn(RIGHT, true, true, true);
         }
 
         // if loaded, not editing, not compared
-        else if (isLoaded[side] && !isEditToggled[side] && !isCompared) {
+        else if (isLoaded[side] && !isEditToggled[side]) {
 
             lineListView.get(side).setItems(FXCollections.observableArrayList(fileManagers[side].getLines()));
 
@@ -235,7 +247,7 @@ public class Controller implements Initializable {
                         .bindBidirectional(((ScrollBar) rightScrollBar).valueProperty());
             }
 
-            activateBtn(side, true, true, false, false);
+            activateBtn(side, true, true, false);
 
             lineListView.get(side).refresh();
         }
@@ -246,7 +258,7 @@ public class Controller implements Initializable {
             editTextArea.get(side).setText(fileManagers[side].getLinesAsOneString());
 
             showEditTextArea(side);
-            activateBtn(side, true, true, true, false);
+            activateBtn(side, true, true, false);
         }
 
 
@@ -267,10 +279,9 @@ public class Controller implements Initializable {
         editTextArea.get(side).setVisible(false);
         diffListView.get(side).setVisible(true);
     }
-    private void activateBtn(int side, boolean load, boolean edit, boolean save, boolean copy){
+    private void activateBtn(int side, boolean load, boolean edit, boolean copy){
         loadBtn.get(side).setDisable(!load);
         editBtn.get(side).setDisable(!edit);
-        saveBtn.get(side).setDisable(!save);
         copyBtn.get(side).setDisable(!copy);
     }
 
