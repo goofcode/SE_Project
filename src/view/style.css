@@ -1,36 +1,37 @@
 .list-cell{
-    -fx-background-insets: 1;
+    -fx-cell-size: 17;
+    -fx-font-size: 13px;
+    -fx-padding:  0 0 0 6;
+    -fx-border-width: 0 0 0 0;
+}
+
+.list-cell:odd{
+    -fx-background-color: white;
+
+}
+.list-cell:even {
+    -fx-background-color: white;
+}
+.list-cell:hover, .list-cell:selected, list-cell:focused{
+    -fx-text-fill: black;
 }
 .list-cell:match {
-    -fx-background-color: blue;
+    -fx-background-color: rgb(231, 255, 238);
 }
 
 .list-cell:match-selected {
-    -fx-background-color: green;
+    -fx-background-color: rgb(129, 232, 170);
 }
 
 .list-cell:mismatch {
-    -fx-background-color: red;
+    -fx-background-color: rgb(250, 217, 220);
 }
 
 .list-cell:mismatch-selected {
-    -fx-background-color: yellow;
+    -fx-background-color: rgb(252, 249, 169);
 }
 
-
-.text:text-match{
-    -fx-set-fill: black;
+.list-view{
+    //-fx-cell-size: 17;
+    -fx-padding:  5 0 0 3;
 }
-
-.text:text-match-selected{
-    -fx-set-fill: white;
-}
-
-.text:text-mismatch{
-    -fx-set-fill: yellow;
-}
-
-.text:text-mismatch-selected{
-    -fx-set-fill: white;
-}
-
