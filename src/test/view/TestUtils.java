@@ -7,8 +7,8 @@ import static model.Constants.LEFT;
 
 public class TestUtils {
 
-    public static final String file1 = "";
-    public static final String file2 = "";
+    public static final String file1 = "asd.txt";
+    public static final String file2 = "asd.txt.txt";
 
     public static void loadFile(GuiTest test, int side, String filename, boolean cancel){
 

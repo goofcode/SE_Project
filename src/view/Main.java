@@ -21,9 +21,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
-
-        Scene mainScene = new Scene(root, 800, 500);
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("main.fxml"));
+        Parent root = loader.load();
+        Scene mainScene = new Scene(root);//, 800, 500);
         mainScene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         primaryStage.setTitle("Simple Merge");

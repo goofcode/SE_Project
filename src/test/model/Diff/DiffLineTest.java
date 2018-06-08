@@ -15,10 +15,10 @@ public class DiffLineTest {
     private List<DiffBlock> emptyA;
     private List<DiffBlock> emptyB;
 
-    private DiffLine sourceSth;
+    private DiffLine srcSth;
     private DiffLine dstEmpty;
     private DiffLine dstSth;
-    private DiffLine sourceEmpty;
+    private DiffLine srcEmpty;
 
 
     @Before
@@ -37,17 +37,17 @@ public class DiffLineTest {
         notEmptyB.add(c);
         notEmptyB.add(d);
 
-        sourceSth = new DiffLine(notEmptyA, true);
+        srcSth = new DiffLine(notEmptyA, true);
         dstEmpty = new DiffLine(emptyA, false);
         dstSth = new DiffLine(notEmptyB, true);
-        sourceEmpty = new DiffLine(emptyB, false);
+        srcEmpty = new DiffLine(emptyB, false);
     }
 
     @Test
     public void SthToEmptyCopyToTest() {
-        sourceSth.copyTo(dstEmpty);
+        srcSth.copyTo(dstEmpty);
 
-        assertEquals(1, sourceSth.getLine().size());
+        assertEquals(1, srcSth.getLine().size());
         assertEquals(1, dstEmpty.getLine().size());
         assertTrue(dstEmpty.getMatched());
 
@@ -56,9 +56,9 @@ public class DiffLineTest {
 
     @Test
     public void EmptyToSthCopyToTest() {
-        sourceEmpty.copyTo(dstSth);
+        srcEmpty.copyTo(dstSth);
 
-        assertEquals(1, sourceEmpty.getLine().size());
+        assertEquals(1, srcEmpty.getLine().size());
         assertEquals(1, dstSth.getLine().size());
         assertTrue(dstSth.getMatched());
     }
@@ -66,9 +66,9 @@ public class DiffLineTest {
     @Test
     public void SthToSthCopyToTest() {
 
-        sourceSth.copyTo(dstSth);
+        srcSth.copyTo(dstSth);
 
-        assertEquals(1, sourceSth.getLine().size());
+        assertEquals(1, srcSth.getLine().size());
         assertEquals(1, dstSth.getLine().size());
         assertTrue(dstSth.getMatched());
     }
@@ -76,9 +76,9 @@ public class DiffLineTest {
 
     @Test
     public void EmptyToEmptyCopyToTest() {
-        sourceEmpty.copyTo(dstEmpty);
+        srcEmpty.copyTo(dstEmpty);
 
-        assertEquals(1, sourceEmpty.getLine().size());
+        assertEquals(1, srcEmpty.getLine().size());
         assertEquals(1, dstEmpty.getLine().size());
         assertTrue(dstEmpty.getMatched());
     }

@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,12 +19,13 @@ public class FileManagerTest {
     @BeforeClass
     public static void setup(){
 
-        System.out.println("Start");
+        System.out.println("FileManager Unit Test Begin");
     }
 
     @Before
-    public void createFile() throws URISyntaxException {
+    public void createFile() {
 
+        System.out.println("Start");
         fileManagerA = new FileManager(new File ("src/test/inputs/test_a.txt"));
         fileManagerB = new FileManager(new File ("src/test/inputs/test_b.txt"));
     }
@@ -32,6 +35,8 @@ public class FileManagerTest {
 
         fileManagerB.synchronizeSize(fileManagerA);
         assertEquals(6, fileManagerB.getLines().size());
+
+        System.out.println("synchronizeSize Test Success");
     }
 
 
@@ -40,6 +45,8 @@ public class FileManagerTest {
 
         String confirmString = fileManagerA.getLinesAsOneString();
         assertEquals("asdf\nasdf\nasdf\nasdf\nasdf", confirmString);
+
+        System.out.println("getLinesAsOneString Test Success");
     }
 
 
@@ -50,6 +57,22 @@ public class FileManagerTest {
 
         assertEquals(5, fileManagerB.getLines().size());
         assertEquals("Hello", fileManagerB.getLine(0));
+
+        System.out.println("setLineFromOneString Test Success");
+    }
+
+    @Test
+    public void copyToTest(){
+        List<Integer> bound = new ArrayList<>();
+        bound.add(1);
+        bound.add(4);
+
+        fileManagerA.copyTo(fileManagerB, bound);
+
+        assertEquals(fileManagerA.getLines().get(1),fileManagerB.getLines().get(1));
+        assertEquals(fileManagerA.getLines().get(4),fileManagerB.getLines().get(4));
+
+        System.out.println("copyTo Test Success");
     }
 
 }

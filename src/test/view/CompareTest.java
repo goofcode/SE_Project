@@ -83,32 +83,34 @@ public class CompareTest extends GuiTest {
 
         assertFalse(find("#compareBtn").isDisabled());
 
-        assertFalse(find("#lLineListView").isVisible());
-        assertFalse(find("#lEditTextView").isVisible());
         assertTrue(find("#lDiffListView").isVisible());
 
-        assertFalse(find("#rLineListView").isVisible());
-        assertFalse(find("#rEditTextView").isVisible());
         assertTrue(find("#rDiffListView").isVisible());
     }
-    private void checkViewAfterCompareWhileEdit(){
-        assertFalse(find("#lEditBtn").isDisabled());
-        assertFalse(find("#lSaveBtn").isDisabled());
-        assertFalse(find("#lCopyBtn").isDisabled());
+    private void checkViewAfterCompareWhileEdit(int side){
+        if(side == LEFT) {
+            assertFalse(find("#lEditBtn").isDisabled());
+            assertFalse(find("#lSaveBtn").isDisabled());
+            assertTrue(find("#lCopyBtn").isDisabled());
+            assertTrue(find("#lEditTextArea").isVisible());
+        }
+        else if (side == RIGHT){
+            assertFalse(find("#rEditBtn").isDisabled());
+            assertFalse(find("#rSaveBtn").isDisabled());
+            assertTrue(find("#rCopyBtn").isDisabled());
+            assertTrue(find("#rEditTextArea").isVisible());
+        }
 
-        assertFalse(find("#rEditBtn").isDisabled());
-        assertFalse(find("#rSaveBtn").isDisabled());
-        assertFalse(find("#rCopyBtn").isDisabled());
 
-        assertFalse(find("#compareBtn").isDisabled());
 
-        assertFalse(find("#lLineListView").isVisible());
-        assertFalse(find("#lEditTextView").isVisible());
-        assertTrue(find("#lDiffListView").isVisible());
 
-        assertFalse(find("#rLineListView").isVisible());
-        assertFalse(find("#rEditTextView").isVisible());
-        assertTrue(find("#rDiffListView").isVisible());
+        assertTrue(find("#compareBtn").isDisabled());
+
+
+
+
+
+
 
     }
 
@@ -133,7 +135,7 @@ public class CompareTest extends GuiTest {
         checkViewBeforeCompare();
         click("#lEditBtn");
         click("#compareBtn");
-        checkViewAfterCompareWhileEdit();
+        checkViewAfterCompareWhileEdit(LEFT);
     }
 
     @Test
@@ -142,7 +144,7 @@ public class CompareTest extends GuiTest {
         checkViewBeforeCompare();
         click("#rEditBtn");
         click("#compareBtn");
-        checkViewAfterCompareWhileEdit();
+        checkViewAfterCompareWhileEdit(RIGHT);
     }
 
     @Test
@@ -152,6 +154,8 @@ public class CompareTest extends GuiTest {
         click("#lEditBtn");
         click("#rEditBtn");
         click("#compareBtn");
-        checkViewAfterCompareWhileEdit();
+        checkViewAfterCompareWhileEdit(LEFT);
+        checkViewAfterCompareWhileEdit(RIGHT);
+
     }
 }
