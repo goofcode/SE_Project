@@ -76,7 +76,7 @@ public class LCSTest {
         assertTrue(diffList.get(0).getMatched());
         assertTrue(diffList.get(1).getMatched());
 
-        System.out.println("Test Success");
+        System.out.println("getDiffByLineString Equal Test Success");
     }
 
     @Test
@@ -97,7 +97,7 @@ public class LCSTest {
         assertFalse(diffList.get(0).getMatched());
         assertFalse(diffList.get(1).getMatched());
 
-        System.out.println("Test Success");
+        System.out.println("getDiffByLineString Diff Test Success");
     }
 
     @Test
@@ -107,6 +107,6 @@ public class LCSTest {
         assertEquals(4, diffListList.get(0).size());
         assertEquals("qwert", diffListList.get(0).get(0).getLine().get(0).getContent());
 
-        System.out.println("Test Success");
+        System.out.println("getDiff Test Success");
     }
 }

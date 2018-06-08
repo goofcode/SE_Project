@@ -69,7 +69,7 @@ public class DiffManagerTest {
 
         assertEquals(1, listInt.get(0).intValue());
 
-        System.out.println("Test Success");
+        System.out.println("mergeFrom Test Success");
 
     }
 
