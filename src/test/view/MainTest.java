@@ -45,15 +45,19 @@ public class MainTest extends ApplicationTest{
 
         // failed to load on left side
         clickOn("#lLoadBtn");
-        type(KeyCode.ESCAPE);
-        type(KeyCode.ENTER);
-
+        push(KeyCode.ESCAPE);
+        push(KeyCode.ENTER);
+        sleep(1000);
         // load on left side
         String file1 = "asd.txt";
         clickOn("#lLoadBtn");
-        write("D").type(KeyCode.SHIFT,KeyCode.SEMICOLON)
-                .type(KeyCode.ENTER).write(file1).type(KeyCode.ENTER);
+        sleep(1000);
+        /*write("D").type(KeyCode.SHIFT,KeyCode.SEMICOLON)
+                .type(KeyCode.ENTER).write(file1).type(KeyCode.ENTER);*/
+        push(KeyCode.SHIFT,KeyCode.D).push(KeyCode.SHIFT,KeyCode.SEMICOLON).push(KeyCode.BACK_SLASH);
+        push(KeyCode.A).push(KeyCode.S).push(KeyCode.D).push(KeyCode.UP).push(KeyCode.ENTER);
 
+        sleep(1000);
         // edit left side
         clickOn("#lEditBtn");
         TextArea lEditTextArea = lookup("#lEditTextArea").query();
@@ -68,8 +72,8 @@ public class MainTest extends ApplicationTest{
         // load same file on right side
         String file2 = "asd.txt.txt";
         clickOn("#rLoadBtn");
-        write("D").type(KeyCode.SHIFT,KeyCode.SEMICOLON)
-                .type(KeyCode.ENTER).write(file2).type(KeyCode.ENTER);
+        push(KeyCode.SHIFT,KeyCode.D).push(KeyCode.SHIFT,KeyCode.SEMICOLON).push(KeyCode.BACK_SLASH);
+        push(KeyCode.A).push(KeyCode.S).push(KeyCode.D).push(KeyCode.UP).push(KeyCode.UP).push(KeyCode.ENTER);
 
 
         // compare two files
