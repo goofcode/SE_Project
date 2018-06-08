@@ -96,11 +96,11 @@ public class CopyTest extends GuiTest {
     @Test
     public void copyTest() throws Exception {
 
-        click((Node)find(".list-cell"));
+        click((Node)find(".list-cell .mismatch"));
         click("lCopyBtn");
         checkViewAfterCopy();
 
-        click((Node)find(".list-cell"));
+        click((Node)find(".list-cell .mismatch"));
         click("rCopyBtn");
         checkViewAfterCopy();
 
