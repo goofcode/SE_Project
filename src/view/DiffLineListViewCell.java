@@ -33,10 +33,14 @@ public class DiffLineListViewCell extends ListCell<DiffLine>{
 
         super.updateItem(line, empty);
 
+        resetClass();
+
         if (empty || line == null){
+
             setText(null);
             setGraphic(null);
         }
+
 
         else{
 
@@ -49,7 +53,6 @@ public class DiffLineListViewCell extends ListCell<DiffLine>{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
 
             flowPane.getChildren().clear();
@@ -83,8 +86,10 @@ public class DiffLineListViewCell extends ListCell<DiffLine>{
                 }
             }
 
+
             setText(null);
             setGraphic(flowPane);
+
         }
     }
 
@@ -94,5 +99,13 @@ public class DiffLineListViewCell extends ListCell<DiffLine>{
         pseudoClassStateChanged(MISMATCH, pseudoClass == MISMATCH);
         pseudoClassStateChanged(MISMATCH_SELECTED, pseudoClass == MISMATCH_SELECTED);
     }
+    private void resetClass(){
+        pseudoClassStateChanged(MATCH, false);
+        pseudoClassStateChanged(MATCH_SELECTED, false);
+        pseudoClassStateChanged(MISMATCH, false);
+        pseudoClassStateChanged(MISMATCH_SELECTED, false);
+
+    }
 }
+
 
