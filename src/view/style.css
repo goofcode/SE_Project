@@ -1,0 +1,54 @@
+
+
+.list-cell{
+    -fx-cell-size: 17;
+    -fx-font-size: 13px;
+    -fx-padding:  0 0 0 6;
+    -fx-border-width: 0 0 0 0;
+}
+
+
+#lLineListView,
+#lLineListView .list-cell:odd,
+#lLineListView .list-cell:even,
+#rLineListView,
+#rLineListView .list-cell:odd,
+#rLineListView .list-cell:even,
+#lDiffListView,
+#rDiffListView
+{
+    -fx-background-color: rgb(244, 244, 244);
+}
+
+
+
+.list-cell{
+    -fx-background-color: white;
+}
+
+.list-cell:hover, .list-cell:selected, list-cell:focused{
+    -fx-text-fill: black;
+}
+.list-cell:match {
+    -fx-background-color: rgb(231, 255, 238);
+}
+
+.list-cell:match-selected {
+    -fx-background-color: rgb(129, 232, 170);
+}
+
+.list-cell:mismatch {
+    -fx-background-color: rgb(250, 217, 220);
+}
+
+.list-cell:mismatch-selected {
+    -fx-background-color: rgb(252, 249, 169);
+}
+
+.list-view{
+    //-fx-cell-size: 17;
+    -fx-padding:  5 0 0 3;
+}
+
+
+
