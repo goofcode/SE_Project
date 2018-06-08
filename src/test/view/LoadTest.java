@@ -78,9 +78,9 @@ public class LoadTest extends GuiTest {
             assertTrue(GuiTest.find("#lCopyBtn").isDisabled());
         }
         else if (side == RIGHT){
-            assertFalse(GuiTest.find("#lEditBtn").isDisabled());
-            assertTrue(GuiTest.find("#lSaveBtn").isDisabled());
-            assertTrue(GuiTest.find("#lCopyBtn").isDisabled());
+            assertFalse(GuiTest.find("#rEditBtn").isDisabled());
+            assertTrue(GuiTest.find("#rSaveBtn").isDisabled());
+            assertTrue(GuiTest.find("#rCopyBtn").isDisabled());
         }
     }
     private void checkBtnActivationAfterLoadsOnBothSides(){
@@ -93,6 +93,7 @@ public class LoadTest extends GuiTest {
     @Test
     public void loadFileTest() {
 
+        System.out.println("Success!!!!!!!!!!!!!!!!!!!!!!!");
         checkBtnActivationBeforeLoad(LEFT);
         loadFile(this, LEFT, file1, false);
         checkBtnActivationAfterLoad(LEFT);
@@ -102,6 +103,8 @@ public class LoadTest extends GuiTest {
         checkBtnActivationAfterLoad(RIGHT);
 
         checkBtnActivationAfterLoadsOnBothSides();
+
+
     }
 
     @Test
@@ -117,6 +120,9 @@ public class LoadTest extends GuiTest {
         checkBtnActivationAfterLoad(RIGHT);
 
         checkBtnActivationAfterLoadsNotOnBothSides();
+
+
+
     }
 
 }
