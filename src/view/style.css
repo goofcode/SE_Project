@@ -1,3 +1,5 @@
+
+
 .list-cell{
     -fx-cell-size: 17;
     -fx-font-size: 13px;
@@ -5,13 +7,25 @@
     -fx-border-width: 0 0 0 0;
 }
 
-.list-cell:odd{
-    -fx-background-color: white;
 
+#lLineListView,
+#lLineListView .list-cell:odd,
+#lLineListView .list-cell:even,
+#rLineListView,
+#rLineListView .list-cell:odd,
+#rLineListView .list-cell:even,
+#lDiffListView,
+#rDiffListView
+{
+    -fx-background-color: rgb(244, 244, 244);
 }
-.list-cell:even {
+
+
+
+.list-cell{
     -fx-background-color: white;
 }
+
 .list-cell:hover, .list-cell:selected, list-cell:focused{
     -fx-text-fill: black;
 }
@@ -35,3 +49,6 @@
     //-fx-cell-size: 17;
     -fx-padding:  5 0 0 3;
 }
+
+
+
