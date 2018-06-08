@@ -11,7 +11,18 @@ public class DiffManager {
 
     private List<List<DiffLine>> diff;
     private int size;
-    private int selectStart, selectEnd;
+
+    public int getSelectStart() {
+        return selectStart;
+    }
+
+    private int selectStart;
+
+    public int getSelectEnd() {
+        return selectEnd;
+    }
+
+    private int selectEnd;
 
     public void init(List<List<DiffLine>> lcsResult){
         this.diff = lcsResult;
