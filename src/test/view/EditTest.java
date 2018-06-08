@@ -80,15 +80,12 @@ public class EditTest extends GuiTest {
         if(side == LEFT) {
             assertFalse(GuiTest.find("#lLoadBtn").isDisabled());
             assertFalse(GuiTest.find("#lSaveBtn").isDisabled());
-
-            //assertFalse(GuiTest.find("#lLineListView").isVisible());  //터짐
-            //assertTrue(GuiTest.find("#lEditTextArea").isVisible());
+            assertTrue(GuiTest.find("#lEditTextArea").isVisible());
         }
         else if (side == RIGHT){
             assertFalse(GuiTest.find("#rLoadBtn").isDisabled());
             assertFalse(GuiTest.find("#rSaveBtn").isDisabled());
-            //assertFalse(GuiTest.find("#rLineListView").isVisible());
-            //assertTrue(GuiTest.find("#rEditTextArea").isVisible());
+            assertTrue(GuiTest.find("#rEditTextArea").isVisible());
         }
 
     }
@@ -96,15 +93,13 @@ public class EditTest extends GuiTest {
 
         if(side == LEFT) {
             assertFalse(GuiTest.find("#lLoadBtn").isDisabled());
-            assertTrue(GuiTest.find("#lSaveBtn").isDisabled());
-            //assertTrue(GuiTest.find("#lLineListView").isVisible());
-            //assertFalse(GuiTest.find("#lEditTextArea").isVisible());
+            assertFalse(GuiTest.find("#lSaveBtn").isDisabled());
+            assertTrue(GuiTest.find("#lLineListView").isVisible());
         }
         else if (side == RIGHT){
             assertFalse(GuiTest.find("#rLoadBtn").isDisabled());
-            assertTrue(GuiTest.find("#rSaveBtn").isDisabled());
-           // assertTrue(GuiTest.find("#rLineListView").isVisible());
-            //assertFalse(GuiTest.find("#rEditTextArea").isVisible());
+            assertFalse(GuiTest.find("#rSaveBtn").isDisabled());
+            assertTrue(GuiTest.find("#rLineListView").isVisible());
         }
     }
     private void checkViewAfterLoadWhileEdit(int side){
