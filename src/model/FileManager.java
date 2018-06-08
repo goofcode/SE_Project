@@ -1,6 +1,9 @@
 package model;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -97,6 +100,13 @@ public class FileManager {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void copyTo(FileManager fileManager, List<Integer> bound){
+
+        for(int i=bound.get(0); i<= bound.get(1); i++){
+            fileManager.setLine(i, this.getLine(i));
         }
     }
 
