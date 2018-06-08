@@ -2,6 +2,8 @@ package model;
 
 import model.Diff.DiffLine;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static model.Constants.LEFT;
@@ -45,34 +47,29 @@ public class DiffManager {
 
     }
 
-    public void merge(int srcSide, FileManager[] fileManagers){
+    public List<Integer> mergeFrom(int srcSide){
 
         int dstSide = srcSide == LEFT ? RIGHT : LEFT;
 
         List<DiffLine> srcDiff = diff.get(srcSide);
         List<DiffLine> dstDiff = diff.get(dstSide);
 
-        FileManager srcFileManager = fileManagers[srcSide];
-        FileManager dstFileManager = fileManagers[dstSide];
 
         for (int i=selectStart; i<=selectEnd; i++){
-
-            // update file manager
-            dstFileManager.setLine(i, srcFileManager.getLine(i));
-
             // update diff manager
             srcDiff.get(i).copyTo(dstDiff.get(i));
         }
 
         resetSelect();
+
+        return new ArrayList<>(Arrays.asList(selectStart, selectEnd));
     }
 
 
     private void resetSelect() {
-        for (int i = 0; i < size; i++) {
-            diff.get(LEFT).get(i).setSelected(false);
-            diff.get(RIGHT).get(i).setSelected(false);
-        }
+
+        for(DiffLine line : diff.get(LEFT)) line.setSelected(false);
+        for(DiffLine line : diff.get(RIGHT)) line.setSelected(false);
     }
 
 }
