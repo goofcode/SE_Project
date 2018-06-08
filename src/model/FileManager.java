@@ -37,10 +37,9 @@ public class FileManager {
 
     public void synchronizeSize(FileManager fileManager){
 
-        for (int i=size; i<lines.size(); i++)
-            lines.remove(i);
-        for (int i=fileManager.getSize(); i<fileManager.getLines().size(); i++)
-            fileManager.getLines().remove(i);
+        // reset lines to original
+        lines = lines.subList(0, this.size);
+        fileManager.setLines(fileManager.getLines().subList(0, fileManager.size));
 
         if(this.size < fileManager.getSize())
             this.padLines(fileManager.getSize() - this.size);
