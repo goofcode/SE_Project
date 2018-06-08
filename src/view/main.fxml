@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 
-<BorderPane fx:controller="view.Controller" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controller">
    <center>
       <GridPane gridLinesVisible="true" prefHeight="500.0" prefWidth="640.0">
         <columnConstraints>
@@ -63,10 +70,13 @@
       </GridPane>
    </center>
    <top>
-      <Button fx:id="compareBtn" mnemonicParsing="false" text="Compare" disable="true" BorderPane.alignment="TOP_LEFT" onAction="#onCompareBtnClicked">
+      <Button fx:id="compareBtn" disable="true" mnemonicParsing="false" onAction="#onCompareBtnClicked" text="Compare" BorderPane.alignment="TOP_RIGHT">
          <BorderPane.margin>
-            <Insets bottom="7.0" left="10.0" top="7.0" />
+            <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
          </BorderPane.margin>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </Button>
    </top>
 </BorderPane>

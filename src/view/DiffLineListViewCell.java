@@ -25,8 +25,8 @@ public class DiffLineListViewCell extends ListCell<DiffLine>{
     private static PseudoClass MISMATCH_SELECTED = PseudoClass.getPseudoClass("mismatch-selected");
 
     private static Color TEXT_MATCH = Color.BLACK;
-    private static Color TEXT_MISMATCH_MATCH = Color.GREEN;
-    private static Color TEXT_MISMATCH_MISMATCH = Color.WHITE;
+    private static Color TEXT_MISMATCH_MATCH = Color.BLACK;
+    private static Color TEXT_MISMATCH_MISMATCH = Color.rgb(214, 27,27);
 
     @Override
     protected void updateItem(DiffLine line, boolean empty) {
