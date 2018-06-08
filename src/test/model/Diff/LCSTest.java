@@ -26,25 +26,26 @@ public class LCSTest {
     private String rightString;
 
     private List<DiffLine> diffList;
-    private List<List<DiffLine>> diffListList;
-
-    private File fileA;
-    private File fileB;
 
     private List<String> left;
     private List<String> right;
 
+    @BeforeClass
+    public static void start(){
+
+        System.out.println("LCS Unit Test Begin");
+    }
 
     @Before
     public void firstSetUp() throws IOException {
-        System.out.println("First getDiff testing begin");
+        System.out.println("Start");
 
         left = new ArrayList<>();
         right = new ArrayList<>();
 
 
-        fileA = new File("src/test/inputs/testDiff_a.txt");
-        fileB = new File("src/test/inputs/testDiff_b.txt");
+        File fileA = new File("src/test/inputs/testDiff_a.txt");
+        File fileB = new File("src/test/inputs/testDiff_b.txt");
 
         try {
             Charset charset = StandardCharsets.UTF_8;
@@ -57,7 +58,6 @@ public class LCSTest {
 
         leftString = "Hello World";
         rightString = "Hello World";
-
 
     }
 
@@ -73,8 +73,10 @@ public class LCSTest {
         assertEquals("Hello World", diffList.get(0).getLine().get(0).getContent());
         assertEquals("Hello World", diffList.get(1).getLine().get(0).getContent());
 
-        assertEquals(true, diffList.get(0).getMatched());
-        assertEquals(true, diffList.get(1).getMatched());
+        assertTrue(diffList.get(0).getMatched());
+        assertTrue(diffList.get(1).getMatched());
+
+        System.out.println("Test Success");
     }
 
     @Test
@@ -92,15 +94,19 @@ public class LCSTest {
         assertEquals("Addr", diffList.get(0).getLine().get(1).getContent());
         assertEquals("nam", diffList.get(1).getLine().get(1).getContent());
 
-        assertEquals(false, diffList.get(0).getMatched());
-        assertEquals(false, diffList.get(1).getMatched());
+        assertFalse(diffList.get(0).getMatched());
+        assertFalse(diffList.get(1).getMatched());
+
+        System.out.println("Test Success");
     }
 
     @Test
     public void getDiffTest() {
-        diffListList = lcsAlgo.getDiff(left, right);
+        List<List<DiffLine>> diffListList = lcsAlgo.getDiff(left, right);
 
         assertEquals(4, diffListList.get(0).size());
         assertEquals("qwert", diffListList.get(0).get(0).getLine().get(0).getContent());
+
+        System.out.println("Test Success");
     }
 }

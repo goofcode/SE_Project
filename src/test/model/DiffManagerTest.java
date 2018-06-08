@@ -56,7 +56,7 @@ public class DiffManagerTest {
     }
 
     @Test
-    public void mergeTest() {
+    public void selectedBoundAndMergeTest() {
         diffManager.selectsDiffBound(1);
         assertEquals(1, diffManager.getSelectStart());
         assertEquals(2, diffManager.getSelectEnd());
@@ -65,5 +65,12 @@ public class DiffManagerTest {
         assertEquals(1, diffManager.getSelectStart());
         assertEquals(2, diffManager.getSelectEnd());
 
+        List<Integer> listInt = diffManager.mergeFrom(0);
+
+        assertEquals(1, listInt.get(0).intValue());
+
+        System.out.println("Test Success");
+
     }
+
 }

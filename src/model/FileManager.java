@@ -104,8 +104,9 @@ public class FileManager {
     }
 
     public void copyTo(FileManager fileManager, List<Integer> bound){
-        for(int index : bound) {
-            fileManager.setLine(index, this.getLine(index));
+
+        for(int i=bound.get(0); i<= bound.get(1); i++){
+            fileManager.setLine(i, this.getLine(i));
         }
     }
 

@@ -17,12 +17,13 @@ public class FileManagerTest {
     @BeforeClass
     public static void setup(){
 
-        System.out.println("Start");
+        System.out.println("FileManager Unit Test Begin");
     }
 
     @Before
-    public void createFile() throws URISyntaxException {
+    public void createFile() {
 
+        System.out.println("Start");
         fileManagerA = new FileManager(new File ("src/test/inputs/test_a.txt"));
         fileManagerB = new FileManager(new File ("src/test/inputs/test_b.txt"));
     }
@@ -32,6 +33,8 @@ public class FileManagerTest {
 
         fileManagerB.synchronizeSize(fileManagerA);
         assertEquals(6, fileManagerB.getLines().size());
+
+        System.out.println("Test Success");
     }
 
 
@@ -40,6 +43,8 @@ public class FileManagerTest {
 
         String confirmString = fileManagerA.getLinesAsOneString();
         assertEquals("asdf\nasdf\nasdf\nasdf\nasdf", confirmString);
+
+        System.out.println("Test Success");
     }
 
 
@@ -50,6 +55,13 @@ public class FileManagerTest {
 
         assertEquals(5, fileManagerB.getLines().size());
         assertEquals("Hello", fileManagerB.getLine(0));
+
+        System.out.println("Test Success");
+    }
+
+    @Test
+    public void coptToTet(){
+
     }
 
 }
