@@ -56,19 +56,14 @@ public class DiffManagerTest {
     }
 
     @Test
-    public void selectsDiffBound() {
-
-    }
-
-    @Test
     public void mergeTest() {
         diffManager.selectsDiffBound(1);
         assertEquals(1, diffManager.getSelectStart());
         assertEquals(2, diffManager.getSelectEnd());
 
-//        diffManager.selectsDiffBound(2);
-//        assertEquals(1, diffManager.getSelectStart());
-//        assertEquals(2, diffManager.getSelectEnd());
+        diffManager.selectsDiffBound(2);
+        assertEquals(1, diffManager.getSelectStart());
+        assertEquals(2, diffManager.getSelectEnd());
 
     }
 }
